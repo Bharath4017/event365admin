@@ -1,0 +1,111 @@
+.file-upload-wrapper {
+  padding: 5px;
+
+  .upload-file-form {
+    margin: 10px 0px;
+    padding: 10px;
+
+    .progress {
+      margin: 1em 0em;
+      border-radius: 10px;
+
+      .bg-theme {
+        background-color: #ff230b;
+      }
+    }
+
+    .upload-action-btns {
+      margin-top: 1em;
+      display: flex;
+      align-items: center;
+
+      .loader-spinner {
+        margin-left: 20px;
+      }
+    }
+  }
+
+  .image-preview {
+    margin: 10px 0px;
+    padding: 10px;
+
+    h6 {
+      text-align: center;
+      margin-bottom: 1em;
+      font-weight: bold;
+    }
+
+    img {
+      width: 25em;
+      height: 15em;
+      object-fit: contain;
+      object-position: center;
+    }
+
+  }
+}
+
+.content-group.file-upload {
+  margin-top: 2em;
+}
+
+.save-to-db {
+  margin-top: 1em;
+}
+
+.upload-action-btns {
+  .upload-btn {
+    margin-right: 15px;
+
+    &:disabled {
+      background: #5a5a5a82;
+      border: 1px solid #5a5a5a82;
+      cursor: not-allowed;
+    }
+  }
+}
+
+#subject {
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-color: transparent;
+  border: 1px solid #CCC;
+  z-index: 10;
+  transition-property: width, height;
+  transition-duration: 0.1s;
+  width: 20em;
+  height: 20em;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+#subject .guideline {
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 0.5px solid rgba(0, 0, 0, 0.3);
+  position: absolute;
+}
+
+#subject .guideline[data-active] {
+  border-color: rgba(255, 0, 0, 0.8);
+}
+
+#subject .guideline[data-axis='X'] {
+  width: 1px;
+  height: 100%;
+  top: 0px;
+}
+
+#subject .guideline[data-axis='Y'] {
+  width: 100%;
+  height: 1px;
+  left: 0px;
+}
+
+#subject .guideline[data-axis='Y']:hover {
+  cursor: s-resize;
+}
+
+#subject .guideline[data-axis='X']:hover {
+  cursor: w-resize;
+}

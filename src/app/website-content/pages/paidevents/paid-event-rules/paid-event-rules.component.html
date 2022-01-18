@@ -1,0 +1,171 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+
+  <div class="section-heading section-head-with-button">
+    <div class="section-title">
+      <p>Set Minimun Amount (For Posting Paid Event)</p>
+    </div>
+    <div>
+      <button class="btn btn-primary btn-raised" (click)="goBack()">
+        <!-- <img src="../../../../assets/img/svg/left-arrow.svg" style="width: 15px; margin-right: 10px;" />
+        Back -->
+        <i class="fa fa-long-arrow-left" aria-hidden="true">
+          <span class="ml-1">Back</span></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="tabular-data-wrapper">
+    <div class="section-title">
+      <!-- <p class="heading">Rule #1 (For Active Partner)</p>
+      <a class="dropdown-item" href="javascript:;" >
+        <a href="javascript:;" (click)="isActiveEdit=true;"><i class="ft-edit-2 mr-2"></i>
+        </a> 
+      </a> -->
+
+      <p class="heading">Rule #1 (For Active Partner)
+        <button title="Edit" class="btn btn-primary btn-raised mr-4 ml-4" (click)="isActiveEdit=true;">
+          <i class="ft-edit-2 mr-2"></i> Edit</button>
+      </p>
+      <p class="green-text">Set by: {{!accountAge ? 'Number of posted event (s)': 'Account Age'}}</p>
+
+    </div>
+    <ng-container *ngIf="isActiveEdit">
+      <div class="flex-cont">
+        <p class="sub-head"> Set by</p>
+        <div class="option">
+          <div class="width-52 ">
+            <p-radioButton name="city" [value]="false" [(ngModel)]="accountAge" inputId="city1"></p-radioButton>
+            <label for="city2" class="radio-lable ma-l">No of posted events</label>
+          </div>
+
+          <div class="p-field-radiobutton">
+            <p-radioButton name="city" [value]="true" [(ngModel)]="accountAge" inputId="city2"></p-radioButton>
+            <label for="city2" class="radio-lable ma-l">Account Age</label>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <div *ngIf="!accountAge">
+      <form #f="ngForm">
+        <ng-container *ngFor="let data of postEvent;let i=index;">
+          <ng-container *ngIf="data.minValue === 0">
+            <p>For posting first
+              <input type="text" id="id_{{i}}" class="border-bottom width-100" hidden [(ngModel)]="data.id"
+                name="id_{{i}}" #id_{{i}}="ngModel" ngModel="id_{{i}}">
+              <input type="number" id="posteventhide_{{i}}" class="border-bottom width-100" [(ngModel)]="data.minValue"
+                name="minValue_{{i}}" #minValue_{{i}}="ngModel" ngModel="minValue_{{i}}" hidden>
+              <input type="number" id="posteventNext1_{{i}}" class="border-bottom width-100" [(ngModel)]="data.maxValue"
+                name="maxValue_{{i}}" #maxValue_{{i}}="ngModel" ngModel="maxValue_{{i}}" [readonly]="!isActiveEdit"
+                (keyup)="validate('posteventNext1_', i, data.maxValue, data)" required>
+              paid events minimum amount to be paid: $
+              <input type="number" id="amount_{{i}}" class="border-bottom width-100" [(ngModel)]="data.amount"
+                name="amount_{{i}}" #amount_{{i}}="ngModel" ngModel="amount_{{i}}" [readonly]="!isActiveEdit"
+                (keyup)="validate('amount_', i, data.amount, data)" required>
+              <small id="row{{i}}" style="color: red; display: none;">Please fill required field.</small>
+            </p>
+          </ng-container>
+          <ng-container *ngIf="data.minValue !== 0">
+            <p>For posting events
+              <input type="text" id="id_{{i}}" class="border-bottom width-100" hidden [(ngModel)]="data.id"
+                name="id_{{i}}" #id_{{i}}="ngModel" ngModel="id_{{i}}">
+              <input type="number" id="postevent_{{i}}" class="border-bottom width-100" [(ngModel)]="data.minValue"
+                name="minValue_{{i}}" #minValue_{{i}}="ngModel" ngModel="minValue_{{i}}" [readonly]="!isActiveEdit"
+                required (keyup)="validate('postevent_', i, data.minValue, data)"> -
+              <input type="number" id="posteventNext_{{i}}" class="border-bottom width-100" [(ngModel)]="data.maxValue"
+                name="maxValue_{{i}}" #maxValue_{{i}}="ngModel" ngModel="maxValue_{{i}}" required
+                [readonly]="!isActiveEdit" (keyup)="validate('posteventNext_', i, data.maxValue, data)">
+              minimum amount to be paid: $
+              <input type="number" id="amount_{{i}}" class="border-bottom width-100" [(ngModel)]="data.amount"
+                name="amount_{{i}}" #amount_{{i}}="ngModel" ngModel="amount_{{i}}" [readonly]="!isActiveEdit" required
+                (keyup)="validate('amount_', i, data.amount, data)">
+              <small id="row{{i}}" style="color: red; display: none;"> Please fill required field.</small>
+            </p>
+          </ng-container>
+        </ng-container>
+        <div class="custom-form-control decision-box-create" *ngIf="isActiveEdit">
+          <button type="submit" title="Submit" class="btn btn-primary btn-raised mr-4"
+            (click)="f.form.valid && updateRules(f, 'postEventCount', 'postEvent', '', 'isActiveEdit')"
+            [disabled]="!f.form.valid"><i class="fa fa-check icon" aria-hidden="true"></i>Save</button>
+
+          <button type="submit" title="Submit" class="btn btn-danger btn-raised" (click)="cancelpostEvent()"><i
+              class="fa fa-check icon" aria-hidden="true"></i>Cancel</button>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="accountAge">
+      <form #acountAgeForm="ngForm">
+        <ng-container *ngFor="let data of accountAgeList;let i=index;">
+          <p>If account age is {{convertDate(data.minValue)}} to {{data.maxValue === 0 ? 'above'
+            :convertDate(data.maxValue)}} minimum amount to be
+            paid is: $<input type="text" id="id_{{i}}" class="border-bottom width-100" hidden [(ngModel)]="data.id"
+              name="idaccountage_{{i}}" #idaccountage_{{i}}="ngModel" ngModel="idaccountage_{{i}}">
+            <input type="number" id="posteventaccountage_{{i}}" class="border-bottom width-100" hidden
+              [(ngModel)]="data.minValue" name="minValueaccountage_{{i}}" #minValueaccountage_{{i}}="ngModel"
+              ngModel="minValueaccountage_{{i}}" [readonly]="!isActiveEdit">
+            <input type="number" id="posteventNextaccountage_{{i}}" class="border-bottom width-100" hidden
+              [(ngModel)]="data.maxValue" name="maxValueaccountage_{{i}}" #maxValueaccountage_{{i}}="ngModel"
+              ngModel="maxValueaccountage_{{i}}" [readonly]="!isActiveEdit">
+
+            <input type="number" id="amountaccountage_{{i}}" class="border-bottom width-100" [(ngModel)]="data.amount"
+              name="amountaccountage_{{i}}" #amountaccountage_{{i}}="ngModel" required ngModel="amountaccountage_{{i}}"
+              [readonly]="!isActiveEdit" (keyup)="validateAccount('amountaccountage_', i, data.amount)">
+            <small id="accountrow{{i}}" style="color: red; display: none;"> Please fill required field.</small>
+          </p>
+        </ng-container>
+        <div class="custom-form-control decision-box-create" *ngIf="isActiveEdit">
+          <button type="submit" title="Submit" class="btn btn-primary btn-raised mr-4"
+            (click)="acountAgeForm.form.valid && updateRules(acountAgeForm, 'accountAge', 'accountAgeList', 'accountage', 'isActiveEdit')"
+            [disabled]="!acountAgeForm.form.valid">
+            <i class="fa fa-check icon" aria-hidden="true"></i>Save</button>
+          <button type="submit" title="Submit" class="btn btn-danger btn-raised" (click)="isActiveEdit=false"
+            (click)="isInactiveEdit=false;onCacel('amountaccountage_', 'accountrow', 'accountAgeList', 'isActiveEdit','accountAgeList')"><i
+              class="fa fa-check icon" aria-hidden="true"></i>Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="tabular-data-wrapper">
+    <div class="section-title">
+      <!-- <p>Rule #2 (For Inactive Partner)</p> <a href="javascript:;" (click)="isInactiveEdit=true;"><i class="ft-edit-2 mr-2"></i>
+      </a>  -->
+
+      <p class="heading">Rule #2 (For Inactive Partner)
+
+        <button title="Edit" class="btn btn-primary btn-raised mr-4 ml-2" (click)="isInactiveEdit=true;">
+          <i class="ft-edit-2 mr-2"></i> Edit</button>
+      </p>
+    </div>
+    <div>
+      <form #inactiveForm="ngForm">
+        <ng-container *ngFor="let data of inactiveAccount;let i=index;">
+          <p>If account is inactive for {{convertDate(data.minValue)}} reduces minimum amount by $:
+            <input type="text" id="id_{{i}}" class="border-bottom width-100" hidden [(ngModel)]="data.id"
+              name="idinactive_{{i}}" #idinactive_{{i}}="ngModel" ngModel="idinactive_{{i}}">
+            <input type="number" id="posteventinactive_{{i}}" class="border-bottom width-100" hidden
+              [(ngModel)]="data.minValue" name="minValueinactive_{{i}}" #minValueinactive_{{i}}="ngModel"
+              ngModel="minValueinactive_{{i}}" [readonly]="!isInactiveEdit">
+            <input type="number" id="posteventNextinactive_{{i}}" class="border-bottom width-100" hidden
+              [(ngModel)]="data.maxValue" name="maxValueinactive_{{i}}" #maxValueinactive_{{i}}="ngModel"
+              ngModel="maxValueinactive_{{i}}" [readonly]="!isInactiveEdit">
+
+            <input type="number" id="amountinactive_{{i}}" class="border-bottom width-100" required
+              [(ngModel)]="data.amount" name="amountinactive_{{i}}" #amountinactive_{{i}}="ngModel"
+              ngModel="amountinactive_{{i}}" [readonly]="!isInactiveEdit"
+              (keyup)="validateInactive('amountinactive_', i, data.amount)">
+            <small id="inactiverow{{i}}" style="color: red; display: none;"> Please fill required field.</small>
+          </p>
+        </ng-container>
+        <div class="custom-form-control decision-box-create" *ngIf="isInactiveEdit">
+          <button type="submit" title="Submit" class="btn btn-primary btn-raised mr-4"
+            (click)="inactiveForm.form.valid && updateRules(inactiveForm, 'inactiveAccount', 'inactiveAccount', 'inactive', 'isInactiveEdit')"
+            [disabled]="!inactiveForm.form.valid"><i class="fa fa-check icon" aria-hidden="true"></i>Save</button>
+
+          <button type="submit" title="Submit" class="btn btn-danger btn-raised"
+            (click)="isInactiveEdit=false;onCacel('amountinactive_', 'inactiverow', 'inactiveAccount', 'isInactiveEdit','inactiveAccount')"><i
+              class="fa fa-check icon" aria-hidden="true"></i>Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

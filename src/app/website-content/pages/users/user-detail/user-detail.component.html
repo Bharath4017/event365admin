@@ -1,0 +1,411 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+  <div class="section-heading section-head-with-button">
+    <div class="section-title flex">
+      <p>{{userDetails?.name | titlecase}}</p>
+      <span class="venue-status"
+        [ngClass]="{'active-color': userDetails?.accountStatus == 'active', 'flagged-color': userDetails?.accountStatus == 'flagged', 'inactive-color': userDetails?.accountStatus == 'inactive'}">(Profile
+        Status: {{userDetails?.accountStatus | titlecase}})</span>
+    </div>
+    <div>
+      <button class="btn btn-primary btn-raised" routerLink='/users'>
+        <!-- <img src="../../../../assets/img/svg/left-arrow.svg" style="width: 15px; margin-right: 10px;" />
+        Back -->
+        <i class="fa fa-long-arrow-left" aria-hidden="true">
+          <span class="ml-1">Back</span></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="veneu-primary-details">
+    <div class="row">
+      <div class="col-md-5 flex">
+        <div class="venue-img">
+          <ng-container *ngIf="!userDetails?.profilePic; else elseBlock">
+            <ngx-avatar name="{{userDetails?.name}}" class="avatar-content avatar-custom"></ngx-avatar>
+          </ng-container>
+          <ng-template #elseBlock>
+            <div style="border: 1px solid #000000;">
+              <img [src]="userDetails?.profilePic" class="card-profile">
+            </div>
+
+          </ng-template>
+          <!-- <img [src]="userDetails?.profilePic" /> -->
+        </div>
+        <div class="primary-venue-details">
+          <div class="content-flex">
+            <h3 class="venue-details-heading">Email</h3>
+            <p class="venue-details" style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis;" title="{{userDetails?.email}}">
+              {{userDetails?.email ? userDetails?.email : 'N/A'}}</p>
+          </div>
+
+          <div class="content-flex">
+            <h3 class="venue-details-heading">Phone No.</h3>
+            <p class="venue-details">{{userDetails?.phoneNo ? userDetails?.phoneNo : 'N/A'}}</p>
+          </div>
+
+          <div class="content-flex">
+            <h3 class="venue-details-heading">City, State</h3>
+            <p class="venue-details">{{userDetails?.city ? userDetails?.city : 'N/A'}} ({{userDetails?.state ?
+              userDetails?.state : 'N/A'}})</p>
+          </div>
+
+          <div class="content-flex">
+            <h3 class="venue-details-heading">Country</h3>
+            <p class="venue-details">{{userDetails?.countryName ? userDetails?.countryName : 'N/A'}}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="venue-details-sec">
+          <div class="content-flex">
+            <h3 class="venue-details-heading">Events Attached</h3>
+            <p class="venue-details">{{userDetails?.totaleventattend ? userDetails?.totaleventattend : 0}}</p>
+          </div>
+
+          <div class="content-flex">
+            <h3 class="venue-details-heading">Tickets Purchased</h3>
+            <p class="venue-details">{{userDetails?.totalticketbooked ? userDetails?.totalticketbooked : 0}}</p>
+          </div>
+
+          <div class="content-flex">
+            <h3 class="venue-details-heading" (click)="showLoginHistoryModal()">Last Login
+              <p><a _ngcontent-c17="" class="link" href="javascript:void(0)">(View history)</a></p>
+            </h3>
+            <div>
+              <p class="venue-details mb-0">{{loginDetailsArray[loginDetailsArray.length - 1]?.signInTime | date: 'MMMM
+                dd, yyyy'}}</p>
+              <p class="venue-details">IP: {{loginDetailsArray[loginDetailsArray.length - 1]?.sourceIp }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="venue-details-sec">
+          <div class="content-flex">
+            <h3 class="venue-details-heading">Login Type</h3>
+            <p class="venue-details">{{userDetails?.loginType ? userDetails?.loginType : 'N/A' }}</p>
+          </div>
+          <div class="content-flex">
+            <h3 class="venue-details-heading">Address</h3>
+            <p class="venue-details">{{userDetails?.address ? userDetails?.address : 'N/A'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="primary-venue-details in-row">
+        <h3 class="venue-details-heading">Member Since</h3>
+        <p class="venue-details ml-1 mb-0">{{userDetails?.created_at | date: 'd MMMM, y'}}</p>
+      </div>
+
+      <div class="primary-venue-details in-row">
+        <h3 class="venue-details-heading">Preferences</h3>
+        <p class="venue-details ml-1 mb-0">{{userDetails?.userPreferenceCategory | categories}}</p>
+      </div>
+    </div>
+
+    <div class="content-flex">
+      <h3 class="venue-details-heading">Short Info</h3>
+      <p class="venue-details">{{userDetails?.shortInfo ? userDetails?.shortInfo : 'N/A'}}</p>
+    </div>
+
+    <p-table #dt [columns]="cols" [value]="eventsList" [responsive]="true" styleClass="faq-table"
+      [alwaysShowPaginator]="false">
+
+      <ng-template pTemplate="caption">
+        <div class="row">
+          <div class="col-md-2 text-left pl-0" style="text-align: right">
+            <input type="text" pInputText size="50" placeholder="Search..." [(ngModel)]="searchValue"
+              class="form-control mb-2">
+          </div>
+          <div class="col-md-2 text-left">
+            <p-dropdown [options]="sortByArray" optionLabel="name" placeholder='Sort By' [(ngModel)]="selectedSortBy"
+              [style]="{width: '100%', minWidth: '100%'}"></p-dropdown>
+            <!-- <select class="form-control" (change)="filterByStatus($event.target.value)">
+              <option value="">Sort by</option>
+              <option value="1">A-Z (Alphabetically)</option>
+              <option value="2">Z-A (Reverse Alphabetically)</option>
+            </select> -->
+          </div>
+          <div class="dropdown col-md-3 text-left">
+            <button class="btn dropdown dropdown-toggle drop-button" type="button" data-toggle="dropdown">
+              {{categoryTitle}}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li style="display: flex;" (click)="selectAllCategories($event)">
+                <a class="dropdown-item" href="javaScript:void(0)" [ngClass]="{'active': allCategoriesSelect}">
+                  <input type="checkbox" [checked]="allCategoriesSelect" class="space" />
+                  All Categories
+                </a>
+              </li>
+              <li style="display: flex;" *ngFor="let category of categorySubCategoryList"
+                (click)="categorySelect($event, category)">
+                <a class="dropdown-item"
+                  [ngClass]="{'dropdown-toggle': category?.subCategory.length > 0, 'active': Object.keys(selectedCategory).includes(category.id.toString()) && selectedCategory[category.id]?.allChecked}"
+                  href="javaScript:void(0)">
+                  <input type="checkbox"
+                    [checked]="Object.keys(selectedCategory).includes(category.id.toString()) && selectedCategory[category.id]?.allChecked"
+                    [indeterminate]="selectedCategory[category.id]?.partialChecked" class="space" />
+                  {{category.categoryName}}
+                </a>
+                <ul class="submenu dropdown-menu" *ngIf="category?.subCategory.length > 0">
+                  <li style="display: flex;" *ngFor="let subcategory of category?.subCategory"
+                    (click)="subCategorySelect($event, subcategory, category)">
+                    <a [ngClass]="{'active': selectedCategory[category.id]?.subcategorySelect.includes(subcategory.id)}"
+                      class="dropdown-item" href="javaScript:void(0)">
+                      <input type="checkbox"
+                        [checked]="selectedCategory[category.id]?.subcategorySelect.includes(subcategory.id)"
+                        class="space" />
+                      {{subcategory.subCategoryName}}</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-3 text-left">
+            <button class="btn btn-primary btn-raised" (click)="searchData()">Search</button>
+            &nbsp;&nbsp;
+            <button class="btn btn-danger btn-raised" type="button" (click)="resetData()">Reset</button>
+          </div>
+          <div class="col-md-2 text-right pr-0">
+            <button type="button" pButton icon="fa fa-file-o" iconPos="left" label="Export CSV"
+              style="background-color: #8e71b5; width: 80%;" (click)="exportData()">
+            </button>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 8%;">Sr.No.</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Category</th>
+          <th>Sub-Category</th>
+          <th>Date Attended</th>
+          <th>Like/Dislike</th>
+          <th>Payment</th>
+          <th style="width: 10%;">Review</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-item let-key let-i="rowIndex">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td><span class="ui-column-title">Name</span>
+            <div class="font-color" style="cursor: pointer;" (click)="goToEventDetail(item.id)">
+              <img *ngIf="item?.favorite?.isFavorite" class="start-icon"
+                src="../../../../assets/img/svg/Icon-feather-star.svg">
+              {{ item?.name | titlecase}}
+            </div>
+          </td>
+          <!-- <td><span class="ui-column-title">Type</span>{{item?.eventType == 1 ? 'Paid' : '' || item?.eventType == 0 ?
+            'Free' : '' || item?.eventType == 2 ? 'System Tickets' : ''}}</td> -->
+            <td><span class="ui-column-title">Type</span>{{ item?.paidType == null ? 'free' : item?.paidType }}</td>
+          <td><span class="ui-column-title">Category</span>{{item?.eventCategories | categories}}</td>
+          <td><span class="ui-column-title">Sub-Category</span>{{item?.eventSubCategories | subcategories}}</td>
+          <td><span class="ui-column-title">Date</span>{{item?.start | date: 'dd/MM/yyyy'}}</td>
+          <td><span class="ui-column-title">Like/Dislike</span>{{item?.userLikes ? item?.userLikes?.isLike ? 'Liked' :
+            'Disliked': 'N/A'}}</td>
+          <td><span class="ui-column-title">Payment</span>
+            <div style="cursor: pointer;" (click)="showPaymentModal(item)" class="font-color">View Details</div>
+          </td>
+          <td><span class="ui-column-title">Review</span>
+            <div style="cursor: pointer;" (click)="showReviewModal(item)" class="font-color">{{item?.reviews?.reviewStar
+              ? item?.reviews?.reviewStar + '/5' : 'N/A'}}</div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td class="text-center text-danger" colspan="9">No Record Found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <p-paginator [rows]="10" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"></p-paginator>
+  </div>
+
+  <p-dialog [draggable]="false" modal="true" [responsive]="true" [style]="{maxWidth: '90%'}" appendTo="body"
+    blockScroll="true" showHeader="false" [(visible)]="loginHistoyModal">
+    <p-table #dt [columns]="cols" [value]="loginDetailsArray" [responsive]="true" styleClass="faq-table"
+      [alwaysShowPaginator]="false">
+      <ng-template pTemplate="caption">
+        <div>
+          <h3 class="modal-heading">Login History for {{userDetails?.name | titlecase}}</h3>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 8%;">Sr.No.</th>
+          <th>Sign-in Time</th>
+          <th>Source IP</th>
+          <th>Login Type</th>
+          <th>Status</th>
+          <th>Current State</th>
+          <th>Sign-Out Time</th>
+          <th>Browser</th>
+          <th>OS</th>
+          <th>Platform</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-key let-i="rowIndex">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td><span class="ui-column-title">Sign-in Time</span>{{item?.signInTime | date: 'dd/M/yyyy hh:mm:ss a z'}}
+          </td>
+          <td><span class="ui-column-title">Source IP</span>{{item?.sourceIp ? item?.sourceIp : 'N/A'}}</td>
+          <td><span class="ui-column-title">Login Type</span>{{item?.loginType ? item?.loginType : 'N/A'}}</td>
+          <td><span class="ui-column-title">Status</span>{{item?.status ? item?.status : 'N/A'}}</td>
+          <td><span class="ui-column-title">Current State</span>{{item?.currentStatus ? item?.currentStatus : 'N/A'}}
+          </td>
+          <td><span class="ui-column-title">Sign-Out Time</span>{{item?.signOutTime | date: 'dd/M/yyyy hh:mm:ss a z'}}
+          </td>
+          <td><span class="ui-column-title">Browser</span>{{item?.browser ? item?.browser : 'N/A'}}</td>
+          <td><span class="ui-column-title">OS</span>{{item?.OS ? item?.OS : 'N/A'}}</td>
+          <td><span class="ui-column-title">Platform</span>{{item?.platform ? item?.platform : 'N/A'}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td class="text-center text-danger" colspan="8">No Record Found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-dialog>
+
+  <p-dialog [draggable]="false" modal="true" [responsive]="true" [style]="{maxWidth: '90%'}" appendTo="body"
+    blockScroll="true" showHeader="false" [(visible)]="paymentDetailsModal">
+    <p-table #dt [columns]="cols" [value]="paymentDetailsArray" [responsive]="true" styleClass="faq-table"
+      [alwaysShowPaginator]="false">
+      <ng-template pTemplate="caption">
+        <div>
+          <h3 class="modal-heading">{{userDetails?.name | titlecase}}'s Payment Details for '{{eventPaymentDetail?.name
+            | titlecase}}'</h3>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 flex">
+            <div class="primary-venue-details">
+              <div class="content-flex">
+                <h3 class="venue-details-heading">Event Name</h3>
+                <p class="venue-details">{{eventPaymentDetail?.name | titlecase}}</p>
+              </div>
+
+              <div class="content-flex">
+                <h3 class="venue-details-heading">Category</h3>
+                <p class="venue-details">{{eventPaymentDetail?.eventCategories | categories}}</p>
+              </div>
+
+              <div class="content-flex">
+                <h3 class="venue-details-heading">Sub-Category</h3>
+                <p class="venue-details">{{eventPaymentDetail?.eventSubCategories | subcategories}}</p>
+              </div>
+
+              <div class="content-flex">
+                <h3 class="venue-details-heading">Event ID</h3>
+                <p class="venue-details">EVNT #{{eventPaymentDetail?.id}}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="venue-details-sec">
+              <div class="content-flex">
+                <h3 class="venue-details-heading">Organiser</h3>
+                <p class="venue-details">{{eventPaymentDetail?.users?.name ? eventPaymentDetail?.users?.name :
+                  'N/A'}}({{eventPaymentDetail?.users?.userType | titlecase}})</p>
+              </div>
+
+              <div class="content-flex">
+                <h3 class="venue-details-heading">Event Type</h3>
+                <p class="venue-details">{{eventPaymentDetail?.eventType == 1 ? 'Paid' : '' ||
+                  eventPaymentDetail?.eventType == 0 ? 'Free' : '' || eventPaymentDetail?.eventType == 2 ? 'System
+                  Tickets' : ''}}</p>
+              </div>
+
+              <div class="content-flex">
+                <h3 class="venue-details-heading">Start Date</h3>
+                <p class="venue-details">{{eventPaymentDetail?.start | date: 'MMMM dd, yyyy'}}</p>
+              </div>
+
+              <div class="content-flex">
+                <h3 class="venue-details-heading">End Date</h3>
+                <p class="venue-details">{{eventPaymentDetail?.end | date: 'MMMM dd, yyyy'}}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="venue-details-sec">
+              <div class="content-flex">
+                <h3 class="venue-details-heading">Start Time</h3>
+                <p class="venue-details">{{eventPaymentDetail?.start | date: 'h:mm a z'}}</p>
+              </div>
+              <div class="content-flex">
+                <h3 class="venue-details-heading">End Time</h3>
+                <p class="venue-details">{{eventPaymentDetail?.end | date: 'h:mm a z'}}</p>
+              </div>
+              <!-- <div class="content-flex">
+                <h3 class="venue-details-heading">Discount Percentage</h3>
+                <p class="venue-details">50%</p>
+              </div> -->
+              <div class="content-flex">
+                <h3 class="venue-details-heading">Payment Mode</h3>
+                <p class="venue-details">Debit Card</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Ticket Type</th>
+          <th>Ticket Name</th>
+          <th>Email ID</th>
+          <th>Billing Address</th>
+          <th>Date & Time</th>
+          <th>Quantity</th>
+          <th>Tansaction ID</th>
+          <th>Invoice No.</th>
+          <th>Amount</th>
+          <th>Status</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-key let-i="rowIndex">
+        <tr>
+          <td><span class="ui-column-title">Ticket Type</span>{{item?.ticketType ? item?.ticketType : 'N/A'}}</td>
+          <td><span class="ui-column-title">Ticket Name</span>Ticket Name</td>
+          <td><span class="ui-column-title">Email ID</span>{{userDetails?.email}}</td>
+          <td><span class="ui-column-title">Billing Address</span>{{userDetails?.address ? userDetails?.address :
+            'N/A'}}</td>
+          <td><span class="ui-column-title">Date & Time</span>{{item?.created_at | date: 'dd/MM/yyyy hh:mm:ss a'}}</td>
+          <td><span class="ui-column-title">Quantity</span>{{item?.totalQuantity ? item?.totalQuantity : 0}}</td>
+          <td><span class="ui-column-title">Tansaction ID</span>{{item?.transactionId ? item?.transactionId : 'N/A'}}
+          </td>
+          <td><span class="ui-column-title">Invoice No</span>{{item?.invoiceNumber ? item?.invoiceNumber : 'N/A'}}</td>
+          <td><span class="ui-column-title">Amount</span>${{item?.pricePerTicket ? item?.pricePerTicket : 0}}</td>
+          <td><span class="ui-column-title">Status</span>{{item?.status}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td class="text-center text-danger" colspan="8">No Record Found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-dialog>
+
+  <p-dialog [draggable]="false" modal="true" [responsive]="true" [style]="{minWidth: '600px'}" appendTo="body"
+    blockScroll="true" showHeader="false" [(visible)]="reviewModal">
+    <h3 class="modal-heading">{{userDetails?.name | titlecase}}'s Review for '{{eventReviewDetail?.name | titlecase}}'
+    </h3>
+    <p-rating [(ngModel)]="eventReviewDetail.reviews.reviewStar" [cancel]="false" readonly="true" class="star-center">
+    </p-rating>
+    <p class="content-width ml-0">{{eventReviewDetail?.reviews?.reviewText}}</p>
+  </p-dialog>
+</div>

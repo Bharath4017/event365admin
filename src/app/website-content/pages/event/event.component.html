@@ -1,0 +1,349 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+
+  <div class="section-heading section-head-with-button section-head-with-button-custom">
+    <div class="section-title">
+      <p>Event List</p>
+    </div>
+    <div>
+      <button class="btn btn-primary btn-raised section-head-with-mar btn-cnt" routerLink='/highlighted-event'>	
+        <icon class="pi pi-star start-icon" style="font-size: 1.7rem"></icon>
+        See Highlighted Events 
+      </button>
+    </div>
+    <div>
+      <button class="btn btn-primary btn-raised section-head-with-mar btn-cnt" routerLink='/explored-event'>	
+        <icon class="pi pi-star start-icon" style="font-size: 1.7rem"></icon>
+        See Explore Events 
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="EventListing" class="tabular-data-wrapper">
+    <!-- <div class="row">
+        <div class="col-md-4 mb-2">
+          <form [formGroup]="searchUserForm" (submit)="searchUser()">
+            <input class="form-control" type="text" placeholder="Search by Name, Mobile, Email" formControlName="search">
+          </form>
+        </div>
+      </div> -->
+    <p-table #dt [columns]="cols" [value]="EventListing" [responsive]="true" styleClass="faq-table"
+      [alwaysShowPaginator]="false">
+      <ng-template pTemplate="caption">
+        <div class="row">
+          <div class="col-md-9">
+            <div class="row">
+              <div class="col-md-6 mb-2 pl-0 text-left" style="text-align: right">
+                <input type="text" pInputText size="46" placeholder="Event Search..." [(ngModel)]="searchValue"
+                  class="form-control mb-2" style="width: auto;">
+              </div>
+              <!--............multilevel dropdown...........  -->
+              <div class="dropdown col-md-6 pl-0" style="position: relative;">
+                <button class="btn dropdown dropdown-toggle drop-button" type="button" data-toggle="dropdown">
+                  {{categoryTitle}}
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu menu-transition">
+                  <li style="display: flex;" (click)="selectAllCategories($event)">
+                    <a class="dropdown-item" href="javaScript:void(0)" [ngClass]="{'active': allCategoriesSelect}">
+                      <input type="checkbox" [checked]="allCategoriesSelect" class="space" />
+                      All Categories
+                    </a>
+                  </li>
+                  <li style="display: flex;" *ngFor="let category of categorySubCategoryList"
+                    (click)="categorySelect($event, category)">
+                    <a class="dropdown-item"
+                      [ngClass]="{'dropdown-toggle': category?.subCategory.length > 0, 'active': Object.keys(selectedCategory).includes(category.id.toString()) && selectedCategory[category.id]?.allChecked}"
+                      href="javaScript:void(0)">
+                      <input type="checkbox"
+                        [checked]="Object.keys(selectedCategory).includes(category.id.toString()) && selectedCategory[category.id]?.allChecked"
+                        [indeterminate]="selectedCategory[category.id]?.partialChecked" class="space" />
+                      {{category.categoryName}}
+                    </a>
+                    <ul class="submenu dropdown-menu" *ngIf="category?.subCategory.length > 0">
+                      <li style="display: flex;" *ngFor="let subcategory of category?.subCategory"
+                        (click)="subCategorySelect($event, subcategory, category)">
+                        <a [ngClass]="{'active': selectedCategory[category.id]?.subcategorySelect.includes(subcategory.id)}"
+                          class="dropdown-item" href="javaScript:void(0)">
+                          <input type="checkbox"
+                            [checked]="selectedCategory[category.id]?.subcategorySelect.includes(subcategory.id)"
+                            class="space" />
+                          {{subcategory.subCategoryName}}</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-md-3"></div> -->
+          <div class="col-md-3 mb-2 pr-0  text-left">
+
+            <p-dropdown [style]="{float:'right',width:'100%'}" [options]="filterArray" optionLabel="name"
+              styleClass="event-dropdown" [dropdownIcon]="filter"  [(ngModel)]="selectedFilterValue"></p-dropdown>
+
+            <!-- <select class="form-control select-relative pl-1" (change)="filterByStatus($event.target.value)">
+              <option value="" disabled selected>
+                Filter
+              </option>
+              <option value="">All</option>
+              <option value="current">Current</option>
+              <option value="upcoming">Upcoming</option>
+              <option value="past">Past</option>
+            </select> -->
+            <!-- <i class="fa fa-filter filter" aria-hidden="true"></i> -->
+          </div>
+        </div>
+        <form [formGroup]="searchByDateForm" class="event-list-form" (submit)="searchByDate()">
+          <div class="row">
+            <div class="col-md-2 mb-2 text-left pl-0">
+              <p-calendar dateFormat="dd-mm-yy" placeholder="From Date" formControlName="toDate"
+                (onSelect)="onToDateChange($event)" [style]="{'width':'324px'}"></p-calendar>
+            </div>
+            <div class="col-md-2 mb-2 text-left">
+              <p-calendar  dateFormat="dd-mm-yy" placeholder="To Date" formControlName="fromDate" [minDate]="minFromDate"
+               [style]="{'width':'324px'}"></p-calendar>
+            </div>
+            <!-- <div class="col-md-4"></div> -->
+            <div class="col-md-3 mb-2 pl-1">
+              <button class="btn btn-primary btn-raised">Search</button>
+              &nbsp;&nbsp;
+              <button class="btn btn-danger btn-raised" type="button" (click)="resetSearchForm()">Reset</button>
+            </div>
+          </div>
+        </form>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 8%;">Sr.No.</th>
+          <th>Name</th>
+          <th>Organiser</th>
+          <th>Type</th>
+          <th>Category</th>
+          <th>Sub-Category</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Tickets</th>
+          <th *ngIf="canChangeStatus">Status</th>
+          <th style="width: 10%;">View</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-key let-i="rowIndex">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <!-- <td><span *ngFor="let col of columns" [ngSwitch]="col.field" class="ui-column-title">
+              <input [ngSwitch]="col.field" *ngSwitchCase="name" pInputText type="text"
+                (input)="dt.filter($event.target.value, col.field, 'contains')">
+              Name</span>{{item?.name}}</td> -->
+          <td><span class="ui-column-title">Name</span>{{item?.name ? item?.name : 'N/A'}}</td>
+          <td><span class="ui-column-title">User</span>{{item?.users?.name ? item?.users?.name : 'N/A'}}</td>
+          <td><span class="ui-column-title">paidType</span>{{item?.eventType == 1 ? 'Paid' : '' || item?.eventType == 0
+            ? 'Free' : '' || item?.eventType == 2 ? 'System Tickets' : ''}}</td>
+          <td><span class="ui-column-title">Category</span>{{item?.eventCategories | categories}}</td>
+          <td><span class="ui-column-title">Sub-Category</span>{{item?.eventSubCategories | subcategories}}</td>
+          <td><span class="ui-column-title">Start</span>{{item?.start | date: 'MMMM d, y'}}</td>
+          <td><span class="ui-column-title">End</span>{{item?.end | date: 'MMMM d, y'}}</td>
+          <td class="action-buttons">
+            <span class="ui-column-title">Tickets</span>
+            <button [routerLink]="['../tickets', item.id]" style="min-width: 3em;color: #066b06;
+            " class="custom-btn custom-btn-small blue-btn text-center edit"><i class="fa fa-ticket"
+                aria-hidden="true"></i></button>
+          </td>
+          <td  *ngIf="canChangeStatus"><span class="ui-column-title">Active Change</span>
+            <div class="d-flex align-items-center">
+              <app-active-swtich [checked]="item?.is_active" (change)="statusChange($event, item.id)" class="ml-1">
+              </app-active-swtich>
+            </div>
+          </td>
+          <td class="action-buttons">
+            <span class="ui-column-title">View Details</span>
+            <button (click)="goToEventDetail(item.id)" class="custom-btn custom-btn-small blue-btn text-center edit"
+              style=" margin-right: 4px !important;min-width: 4em !important;height: 2.4em !important; color:#ce0017">
+              <i class="fa fa-eye" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td class="text-center text-danger" colspan="11">No Record Found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <p-paginator [rows]="10" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"></p-paginator>
+  </div>
+</div>
+<p-dialog [draggable]="false" [header]="itemToEdit? 'Event Details':'Add New Company'" modal="true"
+  [(visible)]="displayAddEditAbout" [responsive]="true" [style]="{minWidth: '800px'}" appendTo="body" maximizable="true"
+  blockScroll="true" [closeOnEscape]="false" (onHide)="closeAddEditCompany()">
+  <div class="dialog-content">
+    <form class="custom-form" [formGroup]="addEditCompanyForm">
+      <div class="custom-form-control">
+        <span class="key">Name</span>
+        <span class="value">
+          <input type="text" name="name" id="name" formControlName="name" readonly>
+        </span>
+        <span class="error-message"
+          *ngIf="addEditCompanyForm.controls.name.invalid && (addEditCompanyForm.controls.name.dirty || addEditCompanyForm.controls.name.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditCompanyForm.controls.name.errors.required || addEditCompanyForm.controls.name.errors.whitespace">Event
+            is required.</span>
+        </span>
+      </div>
+      <div class="row">
+        <div class="custom-form-control col-sm-4">
+          <span class="key">Organiser Name</span>
+          <span class="value">
+            <input type="text" name="users" id="users" formControlName="users" readonly>
+          </span>
+          <span class="error-message"
+            *ngIf="addEditCompanyForm.controls.users.invalid && (addEditCompanyForm.controls.users.dirty || addEditCompanyForm.controls.users.touched) && isAddFaqSubmitted">
+            <span
+              *ngIf="addEditCompanyForm.controls.users.errors.required || addEditCompanyForm.controls.users.errors.whitespace">Event
+              is required.</span>
+          </span>
+        </div>
+        <div class="custom-form-control col-sm-4">
+          <span class="key">Event Type </span>
+          <span class="value">
+            <input type="text" name="paidType" id="paidType" formControlpaidType="paidType" readonly>
+          </span>
+          <span class="error-message"
+            *ngIf="addEditCompanyForm.controls.paidType.invalid && (addEditCompanyForm.controls.paidType.dirty || addEditCompanyForm.controls.paidType.touched) && isAddFaqSubmitted">
+            <span
+              *ngIf="addEditCompanyForm.controls.paidType.errors.required || addEditCompanyForm.controls.paidType.errors.whitespace">Event
+              is required.</span>
+          </span>
+        </div>
+        <div class="custom-form-control col-sm-4">
+          <span class="key">HelpLine No. </span>
+          <span class="value">
+            <input type="text" name="eventHelpLine" id="eventHelpLine" formControlName="eventHelpLine" readonly>
+          </span>
+          <span class="error-message"
+            *ngIf="addEditCompanyForm.controls.eventHelpLine.invalid && (addEditCompanyForm.controls.eventHelpLine.dirty || addEditCompanyForm.controls.eventHelpLine.touched) && isAddFaqSubmitted">
+            <span
+              *ngIf="addEditCompanyForm.controls.eventHelpLine.errors.required || addEditCompanyForm.controls.eventHelpLine.errors.whitespace">Event
+              is required.</span>
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="custom-form-control col-sm-4">
+          <span class="key">Event Start </span>
+          <span class="value">
+            <input type="text" name="start" id="start" formControlName="start" readonly>
+          </span>
+          <span class="error-message"
+            *ngIf="addEditCompanyForm.controls.start.invalid && (addEditCompanyForm.controls.start.dirty || addEditCompanyForm.controls.start.touched) && isAddFaqSubmitted">
+            <span
+              *ngIf="addEditCompanyForm.controls.start.errors.required || addEditCompanyForm.controls.start.errors.whitespace">Event
+              is required.</span>
+          </span>
+        </div>
+        <div class="custom-form-control col-sm-4">
+          <span class="key">Event End </span>
+          <span class="value">
+            <input type="text" name="end" id="end" formControlName="end" readonly>
+          </span>
+          <span class="error-message"
+            *ngIf="addEditCompanyForm.controls.end.invalid && (addEditCompanyForm.controls.end.dirty || addEditCompanyForm.controls.end.touched) && isAddFaqSubmitted">
+            <span
+              *ngIf="addEditCompanyForm.controls.end.errors.required || addEditCompanyForm.controls.end.errors.whitespace">Event
+              is required.</span>
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="custom-form-control col-sm-4">
+          <span class="key">Like Count</span>
+          <span class="value">
+            <input type="text" name="userLikeCount" id="userLikeCount" formControlName="userLikeCount" readonly>
+          </span>
+          <span class="error-message"
+            *ngIf="addEditCompanyForm.controls.userLikeCount.invalid && (addEditCompanyForm.controls.userLikeCount.dirty || addEditCompanyForm.controls.userLikeCount.touched) && isAddFaqSubmitted">
+            <span
+              *ngIf="addEditCompanyForm.controls.userLikeCount.errors.required || addEditCompanyForm.controls.userLikeCount.errors.whitespace">Event
+              is required.</span>
+          </span>
+        </div>
+        <div class="custom-form-control col-sm-4">
+          <span class="key">Dislike Count </span>
+          <span class="value">
+            <input type="text" name="userDisLikeCount" id="userDisLikeCount" formControlName="userDisLikeCount"
+              readonly>
+          </span>
+          <span class="error-message"
+            *ngIf="addEditCompanyForm.controls.userDisLikeCount.invalid && (addEditCompanyForm.controls.userDisLikeCount.dirty || addEditCompanyForm.controls.userDisLikeCount.touched) && isAddFaqSubmitted">
+            <span
+              *ngIf="addEditCompanyForm.controls.userDisLikeCount.errors.required || addEditCompanyForm.controls.userDisLikeCount.errors.whitespace">Event
+              is required.</span>
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="custom-form-control col-sm-4">
+          <span class="key">Selling Start </span>
+          <span class="value">
+            <input type="text" name="sellingStart" id="sellingStart" formControlName="sellingStart">
+          </span>
+          <span class="error-message"
+            *ngIf="addEditCompanyForm.controls.sellingStart.invalid && (addEditCompanyForm.controls.sellingStart.dirty || addEditCompanyForm.controls.sellingStart.touched) && isAddFaqSubmitted">
+            <span
+              *ngIf="addEditCompanyForm.controls.sellingStart.errors.required || addEditCompanyForm.controls.sellingStart.errors.whitespace">Event
+              is required.</span>
+          </span>
+        </div>
+        <div class="custom-form-control col-sm-4">
+          <span class="key">Selling End </span>
+          <span class="value">
+            <input type="text" name="sellingEnd" id="sellingEnd" formControlName="sellingEnd" readonly>
+          </span>
+          <span class="error-message"
+            *ngIf="addEditCompanyForm.controls.sellingEnd.invalid && (addEditCompanyForm.controls.sellingEnd.dirty || addEditCompanyForm.controls.sellingEnd.touched) && isAddFaqSubmitted">
+            <span
+              *ngIf="addEditCompanyForm.controls.sellingEnd.errors.required || addEditCompanyForm.controls.sellingEnd.errors.whitespace">Event
+              is required.</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="custom-form-control">
+        <span class="key">Location</span>
+        <span class="value">
+          <textarea _ngcontent-wmm-c14="" class="form-control" name="address" id="description" formControlName="address"
+            placeholder="Enter Description!" rows="3" readonly></textarea>
+
+        </span>
+        <span class="error-message"
+          *ngIf="addEditCompanyForm.controls.address.invalid && (addEditCompanyForm.controls.address.dirty || addEditCompanyForm.controls.address.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditCompanyForm.controls.address.errors.required || addEditCompanyForm.controls.address.errors.whitespace">Event
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control">
+        <span class="key">Description</span>
+        <span class="value">
+          <textarea _ngcontent-wmm-c14="" class="form-control" name="description2" id="description"
+            formControlName="description2" placeholder="Enter Description!" rows="3" readonly></textarea>
+        </span>
+        <span class="error-message"
+          *ngIf="addEditCompanyForm.controls.description2.invalid && (addEditCompanyForm.controls.description2.dirty || addEditCompanyForm.controls.description2.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditCompanyForm.controls.description2.errors.required || addEditCompanyForm.controls.description2.errors.whitespace">Event
+            is required.</span>
+        </span>
+      </div>
+
+      <div class="custom-form-control">
+        <img [src]="addEditCompanyForm.value.eventImages || 'assets/project-images/City-bg.png'" height="100"
+          width="100" />
+      </div>
+      <div class="custom-form-control decision-box">
+        <!-- <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel"
+          (click)="closeAddEditCompany()"><i class="fa fa-times icon" aria-hidden="true"></i>Cancel</button> -->
+
+      </div>
+    </form>
+  </div>
+</p-dialog>

@@ -1,0 +1,66 @@
+.file-upload-wrapper {
+  padding: 5px;
+
+  .upload-file-form {
+    margin: 10px 0px;
+    padding: 10px;
+
+    .progress {
+      margin: 1em 0em;
+      border-radius: 10px;
+
+      .bg-theme {
+        background-color: #ff230b;
+      }
+    }
+
+    .upload-action-btns {
+      margin-top: 1em;
+      display: flex;
+      align-items: center;
+
+      .loader-spinner {
+        margin-left: 20px;
+      }
+    }
+  }
+
+  .image-preview {
+    margin: 10px 0px;
+    padding: 10px;
+
+    h6 {
+      text-align: center;
+      margin-bottom: 1em;
+      font-weight: bold;
+    }
+
+    img {
+      width: 25em;
+      height: 15em;
+      object-fit: contain;
+      object-position: center;
+    }
+
+  }
+}
+
+.content-group.file-upload {
+  margin-top: 2em;
+}
+
+.save-to-db {
+  margin-top: 1em;
+}
+
+.upload-action-btns {
+  .upload-btn {
+    margin-right: 15px;
+
+    &:disabled {
+      background: #5a5a5a82;
+      border: 1px solid #5a5a5a82;
+      cursor: not-allowed;
+    }
+  }
+}

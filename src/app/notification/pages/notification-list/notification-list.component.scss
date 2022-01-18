@@ -1,0 +1,121 @@
+.notification-card {
+  padding: 5px 24px 20px 35px;
+  border-radius: 8px;
+  margin: 15px 16px 15px 3px;
+
+  &.border-blue {
+    border: 1px solid #2AB3CE;
+  }
+
+  &.border-pink {
+    border: 1px solid #F54F60;
+  }
+
+  &.border-orange {
+    border: 1px solid #F15221;
+  }
+
+  .notification-card-wrapper {
+    padding: 15px 0px 0;
+
+    .notify-bell-icon {
+      display: flex;
+      align-items: center;
+
+      .icon-bell {
+        font-size: 45px;
+      }
+    }
+
+    .notification-text {
+
+      padding-left: 30px;
+
+      h3 {
+        font-size: 18px;
+        font-weight: 600;
+        // color: #2BA2D6;
+        margin-bottom: 5px;
+
+        &.pink-text {
+          color: #F54F60;
+        }
+
+        &.orange-text {
+          color: #F15221;
+        }
+      }
+
+      p {
+        font-size: 14px;
+        letter-spacing: 0;
+        font-weight: 500;
+        margin-bottom: 10px;
+      }
+
+      span {
+        font-size: 14px;
+        color: #8D8D8D;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// .notification-text:nth-child(3n) {
+//     color:#F15221;
+// }
+
+// .notification-text:nth-child(3n+1) {
+//     color: #2BA2D6;
+// }
+
+// .notification-text:nth-child(3n+2) {
+//     color:#F54F60;
+// }
+
+.border:nth-child(3n) {
+  border: 1px solid #F15221 !important;
+}
+
+.border:nth-child(3n+1) {
+  border: 1px solid #2AB3CE !important;
+}
+
+.border:nth-child(3n+2) {
+  border: 1px solid #F54F60 !important;
+}
+
+.notification-card:nth-child(3n) {
+  color: #F15221;
+}
+
+.notification-card:nth-child(3n+1) {
+  color: #2AB3CE;
+}
+
+.notification-card:nth-child(3n+2) {
+  color: #F54F60;
+}
+
+.notification-card:nth-child(3n) .notify-bell-icon span .icon-bell::before {
+  content: "\e908";
+  color: #f15221;
+}
+
+.notification-card:nth-child(3n+1) .notify-bell-icon span .icon-bell::before {
+  content: "\e906";
+  color: #2ba2d6;
+}
+
+.notification-card:nth-child(3n+2) .notify-bell-icon span .icon-bell::before {
+  content: "\e907";
+  color: #f54f60;
+}
+
+// notification virtual scroll
+.card-scroll-block {
+  max-height: 100vh;
+  overflow: auto;
+  min-height: 100%;
+}

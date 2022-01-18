@@ -1,0 +1,143 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+
+  <ngb-tabset>
+    <ngb-tab title="Banner">
+      <ng-template ngbTabContent>
+        <form [formGroup]="formBanner">
+          <div class="cr-venue-wrapper">
+            <div class="row row-mar">
+              <div class="col-sm-6">
+                <div>
+                  <p class="lable-head required-field">Banner Text</p>
+                  <textarea rows="8" pInputText placeholder="Enter banner text (upto 200 Character)"
+                    formControlName="bannerText" class="formBanner-control mb-2" style="width: 100%;"></textarea>
+                  <ng-container *ngIf="isFormSubmit">
+                    <p class="error-message" *ngIf="formBanner.controls.bannerText.errors?.required">Please enter
+                      description</p>
+                    <p class="error-message" *ngIf="formBanner.controls.bannerText.errors?.maxlength">Character limit should not be more than 200.</p>
+                    <p class="error-message" *ngIf="formBanner.controls.bannerText.errors?.minlength">Character limit should not be less than 10.</p>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div>
+                  <p class="lable-head">URL</p>
+                  <input type="text" pInputText placeholder="eg: https://www.websitename.com" class="formBanner-control mb-2"
+                    formControlName="url" style="width: 100%;">
+                  <ng-container *ngIf="isFormSubmit">
+                    <p class="error-message" *ngIf="formBanner.controls.url.errors?.pattern">Please enter valid
+                      website url
+                    </p>
+                  </ng-container>
+                </div>
+                <div class="mb-2">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <p class="lable-head">Text Color</p>
+                      <input type="color" [(ngModel)]="textColor" [ngModelOptions]="{standalone: true}"
+                        style="width: 100%;">
+                    </div>
+                    <div class="col-sm-6">
+                      <p class="lable-head">Background Color</p>
+                      <input type="color" [(ngModel)]="bgColor" [ngModelOptions]="{standalone: true}"
+                        style="width: 100%;">
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <p class="lable-head">Show Banner Text</p>
+                  <app-active-swtich [checked]="isEnabled" (change)="statusChange($event)">
+                  </app-active-swtich>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="flex">
+          <button class="custom-btn banner-green" (click)="updateBannerDetails()">
+            Save
+          </button>
+        </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Header Images">
+      <ng-template ngbTabContent>
+
+        <div>
+
+          <div>
+            <p class="lable-head required-field">Interval</p>
+            <div class="input-group mb-2">
+              <input type="number" [(ngModel)]="imageInterval" class="interval-input" min="1">
+              <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2">Second</span>
+              </div>
+            </div>
+            <ng-container>
+              <p class="error-message" *ngIf="imageInterval < 1">Interval should not be less than 1 second.</p>
+            </ng-container>
+          </div>
+
+          <div>
+            <p class="lable-head">Upload Header Image
+
+              <a href="javascript:;" (click)="fileInput.click()"><i class="ml-2 fa fa-plus icon"
+                  aria-hidden="true"></i></a>
+              <input hidden type="file" #fileInput size="60" multiple="multiple" accept="image/*" fxFlex="100"
+                (change)="onUpload($event)" />
+
+            </p>
+
+            <div class="preview-card-row">
+              <div class="preview-card-box" *ngFor="let file of selectedFile; let i = index">
+                <div class="preview-card-image" [ngStyle]="{
+                              'background-image':  file.image
+                              ? 'url(' + file.image + ')'
+                              : ''            }">
+                </div>
+                <a href="javascript:;" (click)="deleteImage(file, i)"><i class="fa fa-times preview-img-cross"
+                    aria-hidden="true"></i></a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div>
+
+          <div class="flex">
+            <button class="custom-btn banner-green" (click)="updateHeaderImageInterval()">
+              Save
+            </button>
+          </div>
+        </div>
+
+        <div class="banner-list">
+          <div class="section-heading section-head-with-button">
+            <div class="section-title">
+              <p>Banner Images</p>
+            </div>
+          </div>
+          <div class="card-row">
+            <div class="card-box" *ngFor="let poster of headerImagesList; let i = index" [ngClass]="{'disable-slider': EnbleSliderImg}">
+              <div class="card-image" [ngStyle]="{
+                            'background-image':  poster.image
+                            ? 'url(' + poster.image + ')'
+                            : ''            }"   >
+              </div>
+              <a href="javascript:;" (click)="onDeleteHeaderImageCall(poster.id, i)"><i class="fa fa-times img-cross"
+                  aria-hidden="true"></i></a>
+
+                  <div class="enable-disable">
+                    <button [ngClass]="{'enb': poster?.status === true, 'disb' : poster?.status === false }"
+                     (click)="enableImage(poster.id, poster.status)" >{{(poster?.status)?'enable':'disable'}}</button>
+                  </div>
+            </div>
+          </div>
+         
+        </div> 
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+
+</div>

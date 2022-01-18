@@ -1,0 +1,47 @@
+.venue-status {
+  font-style: italic;
+  font-size: 16px;
+  color: green;
+  margin-left: 8px;
+}
+.veneu-primary-details {
+  width: 100%;
+  margin-top: 20px;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+.venue-img {
+  width: 48%;
+  height: 135px;
+  border: 1px solid #000000;
+}
+.venue-img img {
+  width: 100%;
+  height: 100%;
+}
+.primary-venue-details {
+  width: 48%;
+}
+.venue-details-heading {
+  font-size: 16px;
+  color: #000000;
+  font-weight: 600;
+  text-transform: capitalize;
+  margin-bottom: 5px;
+}
+.venue-details {
+  font-weight: 400;
+}
+.venue-details-sec {
+  width: 90%;
+}
+.in-row {
+  display: flex;
+  margin-top: 20px;
+  align-items: flex-start;
+}
+.clr-blue {
+  color: blue;
+}

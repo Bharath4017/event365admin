@@ -1,0 +1,226 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+    <div class="section-heading section-head-with-button">
+        <div class="section-title">
+            <p>{{subadminDetailId ? 'Edit' : 'Create'}} Sub-Admin</p>
+        </div>
+        <div>
+            <button class="btn btn-primary btn-raised" (click)="goBack()">
+                <!-- <img src="../../../../assets/img/svg/left-arrow.svg" style="width: 15px; margin-right: 10px;"/>
+      Back -->
+                <i class="fa fa-long-arrow-left" aria-hidden="true">
+                    <span class="ml-1">Back</span></i>
+            </button>
+        </div>
+    </div>
+    <form [formGroup]="form">
+        <div class="cr-venue-wrapper">
+            <div class="row row-mar">
+                <div class="col-sm-6">
+                    <div class="event-row">
+                        <p class="field-name required-field">Name</p>
+                        <div style="width: 100%;">
+                            <input type="text" pInputText formControlName="name" class="form-control mb-2"
+                                style="width: 100%;">
+
+                            <p class="error-message" *ngIf="isSubmitdetails && form.controls.name.errors?.required">
+                                Please Enter Name</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="event-row">
+                        <p class="field-name required-field">Email</p>
+                        <div style="width: 100%;">
+                            <input type="text" pInputText formControlName="email" class="form-control mb-2"
+                                style="width: 100%;">
+                            <p class="error-message" *ngIf="isSubmitdetails && form.controls.email.errors?.required">
+                                Please Enter Email</p>
+                            <p class="error-message" *ngIf="isSubmitdetails && form.controls.email.errors?.email">Please
+                                Enter Valid Email</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="event-row">
+                        <div class="number_bottom">
+                            <mat-form-field class="ng_Label" appearance="standard" floatLabel="always" class="d-flex">
+                                <mat-label style="width: 35%; font-weight: 600;">Mobile Number</mat-label>
+                                <div class="d-block" style="width: 65%;">
+                                    <input type="text" hidden="true" matInput autocomplete="off">
+                                    <intl-input-phone [ConfigurationOption]="configOption1"
+                                        [(NumberTextValue)]="NumberModel" class="ng_country"
+                                        (OnNumberChange)="onNumberChange($event)"
+                                        (OnIsRequiredChange)="requiredFlagChange($event)"></intl-input-phone>
+                                    <p class="error-message" style="margin-top: 15px;"
+                                        *ngIf="isSubmitdetails && (NumberModel === '' || !phoneReq)">Please
+                                        Enter
+                                        Phone Number</p>
+                                </div>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <!-- <div class="event-row">
+                        <p class="field-name required-field">Phone Number</p>
+                        <div style="width: 100%;">
+                            <input type="number" pInputText formControlName="phonenumber" class="form-control mb-2"
+                                style="width: 100%;">
+
+                            <p class="error-message"
+                                *ngIf="isSubmitdetails && form.controls.phonenumber.errors?.required">Please Enter Phone
+                                Number</p>
+                            <p class="error-message"
+                                *ngIf="isSubmitdetails && form.controls.phonenumber.errors?.pattern">Please Enter Only
+                                Digits</p>
+                            <p class="error-message"
+                                *ngIf="isSubmitdetails && form.controls.phonenumber.errors?.pattern">Please Enter Valid
+                                Phone Number</p>
+                        </div>
+
+
+                    </div> -->
+
+                    <div class="event-row">
+                        <p class="field-name required-field">Password</p>
+                        <div style="width: 100%;">
+                            <input type="password" pInputText formControlName="password" class="form-control mb-2"
+                                style="width: 100%;" autocomplete="off">
+
+                            <p class="error-message"
+                                *ngIf="isSubmitdetails && !subadminDetailId && form.controls.password.errors?.required">
+                                Please Enter Password</p>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </form>
+    <div class="sub-venue-main">
+        <div>
+            <span class="sub-heading">Permission</span>
+        </div>
+
+        <div class="row row-mar ">
+            <div class="flex-wrap">
+                <div class="col-sm-3 mb-2">
+                    <div>
+                        <p-checkbox name="groupname" (onChange)="selectAllPermission($event)" class="space">
+                        </p-checkbox>
+                        <span>Select All</span>
+                    </div>
+                </div>
+                <div class="col-sm-3 mb-2">
+                    <div>
+                        <p-checkbox name="groupname" value="Dashboard" [(ngModel)]="subAdminPermissionArray"
+                            class="space"></p-checkbox>
+                        <span>Dashboard</span>
+                    </div>
+                </div>
+
+                <div class="col-sm-3 mb-2">
+                    <div>
+                        <p-checkbox name="groupname" value="Customers" [(ngModel)]="subAdminPermissionArray"
+                            class="space"></p-checkbox>
+                        <span>Customers</span>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-3 mb-2">
+                    <div>
+                        <p-checkbox name="groupname" value="Organisers" [(ngModel)]="subAdminPermissionArray"
+                            class="space"></p-checkbox>
+                        <span>Organisers</span>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-3 mb-2">
+                    <div>
+                        <p-checkbox name="groupname" value="Events" [(ngModel)]="subAdminPermissionArray" class="space">
+                        </p-checkbox>
+                        <span>Events</span>
+                    </div>
+                </div>
+
+                <div class="col-sm-3 mb-2">
+                    <div>
+                        <p-checkbox name="groupname" value="Archived-Events" [(ngModel)]="subAdminPermissionArray"
+                            class="space">
+                        </p-checkbox>
+                        <span>Archived-Events</span>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-3 mb-2">
+                    <div>
+                        <p-checkbox name="groupname" value="Paid Events" [(ngModel)]="subAdminPermissionArray"
+                            class="space"></p-checkbox>
+                        <span>Paid Events</span>
+                    </div>
+                </div>
+
+                <div class="col-sm-3 mb-2">
+                    <div>
+                        <p-checkbox name="groupname" value="Home Page Design" [(ngModel)]="subAdminPermissionArray"
+                            class="space"></p-checkbox>
+                        <span>Home Page Design</span>
+                    </div>
+                </div>
+
+                <div class="col-sm-3 mb-2">
+                    <div>
+                        <p-checkbox name="groupname" value="Categories" [(ngModel)]="subAdminPermissionArray"
+                            class="space"></p-checkbox>
+                        <span>Categories</span>
+                    </div>
+                </div>
+                <div class="col-sm-3 mb-2">
+                    <div>
+                        <p-checkbox name="groupname" value="Venues" [(ngModel)]="subAdminPermissionArray" class="space">
+                        </p-checkbox>
+                        <span>Venues</span>
+                    </div>
+                </div>
+                <div class="col-sm-3 mb-2">
+                    <div>
+                        <p-checkbox name="groupname" value="Payments" [(ngModel)]="subAdminPermissionArray"
+                            class="space"></p-checkbox>
+                        <span>Payments</span>
+                    </div>
+                </div>
+                <div class="col-sm-3 mb-2">
+                    <div>
+                        <p-checkbox name="groupname" value="Support" [(ngModel)]="subAdminPermissionArray"
+                            class="space"></p-checkbox>
+                        <span>Support</span>
+                    </div>
+                </div>
+
+                <div class="col-sm-3 mb-2">
+                    <div>
+                        <p-checkbox name="groupname" value="Event Status" [(ngModel)]="subAdminPermissionArray"
+                            class="space"></p-checkbox>
+                        <span>Event Status</span>
+                    </div>
+                </div>
+
+                <div class=" flex">
+                    <button class="custom-btn venue-btn" (click)="goBack()">
+                        Cancel
+                    </button>
+                    <button class="custom-btn venue-green" (click)="saveDetails()">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>

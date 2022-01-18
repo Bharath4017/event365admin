@@ -1,0 +1,408 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+  <div class="section-heading section-head-with-button">
+    <div class="section-title">
+      <p>{{venueDetailId === '' ? 'Create Venue': 'Edit Venue'}}</p>
+    </div>
+    <div>
+      <button class="btn btn-primary btn-raised" (click)="goBack()">
+        <!-- <img src="../../../../assets/img/svg/left-arrow.svg" style="width: 15px; margin-right: 10px;" />
+        Back -->
+        <i class="fa fa-long-arrow-left" aria-hidden="true">
+          <span class="ml-1">Back</span></i>
+      </button>
+    </div>
+  </div>
+  <form [formGroup]="form">
+    <div class="cr-venue-wrapper">
+      <div class="row row-mar">
+        <div class="col-sm-4">
+          <div>
+            <p class="lable-head required-field">Name</p>
+            <input type="text" pInputText name="name" formControlName="name" placeholder="Enter name of the value"
+              class="form-control mb-2" style="width: 100%;">
+            <ng-container *ngIf="isSubmit">
+              <p class="error-message" *ngIf="form.controls.name.errors?.required">Please enter name</p>
+              <p class="error-message" *ngIf="form.controls.name.errors?.maxlength">Too Long!</p>
+              <p class="error-message" *ngIf="form.controls.name.errors?.pattern">Please enter valid name </p>
+            </ng-container>
+          </div>
+          <div>
+            <p class="lable-head required-field">Address</p>
+            <input type="text" #searchTextField pInputText placeholder="Enter address of the value"
+              formControlName="address" class="form-control mb-2" style="width: 100%;" (input)="handleChange($event)">
+            <!-- <input id="searchTextField" type="text" size="50"> -->
+            <ng-container *ngIf="isSubmit">
+              <p class="error-message" *ngIf="form.controls.address.errors?.required">Please enter address</p>
+              <p class="error-message"
+                *ngIf="latitude === '' && longitude === '' && !form.controls.address.errors?.required">Invalid Address
+              </p>
+              <!-- <p class="error-message" *ngIf="form.controls.address.errors?.maxlength">Too Long!</p> -->
+            </ng-container>
+          </div>
+          <div>
+            <p class="lable-head">Website URL</p>
+            <input type="text" pInputText placeholder="eg: https://www.websitename.com" class="form-control mb-2"
+              formControlName="websiteurl" style="width: 100%;">
+            <ng-container *ngIf="isSubmit">
+              <p class="error-message" *ngIf="form.controls.websiteurl.errors?.maxlength">Too Long!</p>
+              <p class="error-message" *ngIf="form.controls.websiteurl.errors?.pattern">Please enter valid website url
+              </p>
+            </ng-container>
+          </div>
+          <div>
+            <p class="lable-head">Description </p>
+            <textarea rows="5" pInputText placeholder="Enter description of the venue (upto 100 words)"
+              formControlName="description" class="form-control mb-2" style="width: 100%;"></textarea>
+            <ng-container *ngIf="isSubmit">
+              <p class="error-message" *ngIf="form.controls.description.errors?.maxlength">Too Long!</p>
+              <p class="error-message" *ngIf="form.controls.description.errors?.minlength">Too short!</p>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="col-sm-5">
+          <p class="lable-head">Hours Of operation</p>
+          <div class="row row-mar editRow">
+            <div class="col-sm-6 col-xl-4 pl-0">
+              <!-- <p-checkbox name="groupname" value="val1" label="Monday" [(ngModel)]="selectedValues"></p-checkbox> -->
+              <p-checkbox formControlName="monday" binary="true" inputId="binary"></p-checkbox>
+              <span class="time-lable">Monday</span>
+            </div>
+            <div class="col-xl-8 col-sm-12 mar-bot">
+              <div class="row display-flex">
+                <span class="time-lable">From</span>
+                <p-dropdown styleClass="create-venue-time" [options]="timings" formControlName="mondayFrom"
+                  placeholder="" optionLabel="key" [showClear]="false"></p-dropdown>
+                <span class="time-lable">To</span>
+                <p-dropdown styleClass="create-venue-time" [options]="timings" formControlName="mondayTo" placeholder=""
+                  optionLabel="key" [showClear]="false"></p-dropdown>
+              </div>
+              <div class="row">
+                <ng-container *ngIf="form.controls.monday.value">
+                  <p class="error-message ml-1"
+                    *ngIf="form.controls.mondayFrom.value.number > form.controls.mondayTo.value.number">Please select
+                    valid timings</p>
+                </ng-container>
+              </div>
+            </div>
+
+            <!-- <div class="col-sm-4 mar-bot">
+              <div class="row">
+                <ng-container *ngIf="form.controls.monday.value">
+                  <p class="error-message ml-1"
+                    *ngIf="form.controls.mondayFrom.value.number > form.controls.mondayTo.value.number">Please select
+                    valid timings</p>
+                </ng-container>
+              </div>
+            </div> -->
+          </div>
+          <div class="row row-mar">
+            <div class="col-sm-6 col-xl-4 pl-0">
+              <p-checkbox formControlName="tuesday" binary="true" inputId="binary"></p-checkbox>
+              <span class="time-lable">Tuesday</span>
+            </div>
+            <div class="col-xl-8 col-sm-12 mar-bot">
+              <div class="row display-flex">
+                <span class="time-lable">From</span>
+                <p-dropdown styleClass="create-venue-time" [options]="timings" formControlName="tuesdayFrom"
+                  placeholder="" optionLabel="key" [showClear]="false"></p-dropdown>
+                <span class="time-lable">To</span>
+                <p-dropdown styleClass="create-venue-time" [options]="timings" formControlName="tuesdayTo"
+                  placeholder="" optionLabel="key" [showClear]="false"></p-dropdown>
+              </div>
+              <div class="row">
+                <ng-container *ngIf="form.controls.tuesday.value">
+                  <p class="error-message ml-1"
+                    *ngIf="form.controls.tuesdayFrom.value.number > form.controls.tuesdayTo.value.number">Please select
+                    valid timings</p>
+                </ng-container>
+              </div>
+            </div>
+            <!-- <div class="col-sm-4 mar-bot">
+              <div class="row">
+                <ng-container *ngIf="form.controls.tuesday.value">
+                  <p class="error-message"
+                    *ngIf="form.controls.tuesdayFrom.value.number > form.controls.tuesdayTo.value.number">Please select
+                    valid timings</p>
+                </ng-container>
+              </div>
+            </div> -->
+          </div>
+          <div class="row row-mar">
+            <div class="col-sm-6 col-xl-4 pl-0">
+              <p-checkbox formControlName="wednesday" binary="true" inputId="binary"></p-checkbox>
+              <span class="time-lable">Wednesday</span>
+            </div>
+            <div class="col-xl-8 col-sm-12 mar-bot">
+              <div class="row display-flex">
+                <span class="time-lable">From</span>
+                <p-dropdown styleClass="create-venue-time" [options]="timings" formControlName="wednesdayFrom"
+                  placeholder="" optionLabel="key" [showClear]="false"></p-dropdown>
+                <span class="time-lable">To</span>
+                <p-dropdown styleClass="create-venue-time" [options]="timings" formControlName="wednesdayTo"
+                  placeholder="" optionLabel="key" [showClear]="false"></p-dropdown>
+              </div>
+              <div class="row">
+                <ng-container *ngIf="form.controls.wednesday.value">
+                  <p class="error-message ml-1"
+                    *ngIf="form.controls.wednesdayFrom.value.number > form.controls.wednesdayTo.value.number">Please
+                    select valid timings</p>
+                </ng-container>
+              </div>
+            </div>
+            <!-- <div class="col-sm-4 mar-bot">
+              <div class="row">
+                <ng-container *ngIf="form.controls.wednesday.value">
+                  <p class="error-message ml-1"
+                    *ngIf="form.controls.wednesdayFrom.value.number > form.controls.wednesdayTo.value.number">Please
+                    select valid timings</p>
+                </ng-container>
+              </div>
+            </div> -->
+          </div>
+          <div class="row row-mar">
+            <div class="col-sm-6 col-xl-4 pl-0">
+              <p-checkbox formControlName="thrusday" binary="true" inputId="binary"></p-checkbox>
+              <span class="time-lable">Thursday</span>
+            </div>
+            <div class="col-xl-8 col-sm-12 mar-bot">
+              <div class="row display-flex">
+                <span class="time-lable">From</span>
+                <p-dropdown styleClass="create-venue-time" [options]="timings" formControlName="thrusdayFrom"
+                  placeholder="" optionLabel="key" [showClear]="false"></p-dropdown>
+                <span class="time-lable">To</span>
+                <p-dropdown styleClass="create-venue-time" [options]="timings" formControlName="thrusdayTo"
+                  placeholder="" optionLabel="key" [showClear]="false"></p-dropdown>
+              </div>
+              <div class="row">
+                <ng-container *ngIf="form.controls.thrusday.value">
+                  <p class="error-message ml-1"
+                    *ngIf="form.controls.thrusdayFrom.value.number > form.controls.thrusdayTo.value.number">Please
+                    select valid timings</p>
+                </ng-container>
+              </div>
+            </div>
+            <!-- <div class="col-sm-4 mar-bot">
+              <div class="row">
+                <ng-container *ngIf="form.controls.thrusday.value">
+                  <p class="error-message ml-1"
+                    *ngIf="form.controls.thrusdayFrom.value.number > form.controls.thrusdayTo.value.number">Please
+                    select valid timings</p>
+                </ng-container>
+              </div>
+            </div> -->
+          </div>
+          <div class="row row-mar">
+            <div class="col-sm-6 col-xl-4 pl-0">
+              <p-checkbox formControlName="friday" binary="true" inputId="binary"></p-checkbox>
+              <span class="time-lable">Friday</span>
+            </div>
+            <div class="col-xl-8 col-sm-12 mar-bot">
+              <div class="row display-flex">
+                <span class="time-lable">From</span>
+                <p-dropdown styleClass="create-venue-time" [options]="timings" formControlName="fridayFrom"
+                  placeholder="" optionLabel="key" [showClear]="false"></p-dropdown>
+                <span class="time-lable">To</span>
+                <p-dropdown styleClass="create-venue-time" [options]="timings" formControlName="fridayTo" placeholder=""
+                  optionLabel="key" [showClear]="false"></p-dropdown>
+              </div>
+              <div class="row">
+                <ng-container *ngIf="form.controls.friday.value">
+                  <p class="error-message ml-1"
+                    *ngIf="form.controls.fridayFrom.value.number > form.controls.fridayTo.value.number">Please select
+                    valid timings</p>
+                </ng-container>
+              </div>
+            </div>
+            <!-- <div class="col-sm-4 mar-bot">
+              <div class="row">
+                <ng-container *ngIf="form.controls.friday.value">
+                  <p class="error-message ml-1"
+                    *ngIf="form.controls.fridayFrom.value.number > form.controls.fridayTo.value.number">Please select
+                    valid timings</p>
+                </ng-container>
+              </div>
+            </div> -->
+          </div>
+          <div class="row row-mar">
+            <div class="col-sm-6 col-xl-4 pl-0">
+              <p-checkbox formControlName="saturday" binary="true" inputId="binary"></p-checkbox>
+              <span class="time-lable">Saturday</span>
+            </div>
+            <div class="col-xl-8 col-sm-12 mar-bot">
+              <div class="row display-flex">
+                <span class="time-lable">From</span>
+                <p-dropdown styleClass="create-venue-time" [options]="timings" formControlName="saturdayFrom"
+                  placeholder="" optionLabel="key" [showClear]="false"></p-dropdown>
+                <span class="time-lable">To</span>
+                <p-dropdown styleClass="create-venue-time" [options]="timings" formControlName="saturdayTo"
+                  placeholder="" optionLabel="key" [showClear]="false"></p-dropdown>
+              </div>
+              <div class="row">
+                <ng-container *ngIf="form.controls.saturday.value">
+                  <p class="error-message ml-1"
+                    *ngIf="form.controls.saturdayFrom.value.number > form.controls.saturdayTo.value.number">Please
+                    select valid timings</p>
+                </ng-container>
+              </div>
+            </div>
+            <!-- <div class="col-sm-4 mar-bot">
+              <div class="row">
+                <ng-container *ngIf="form.controls.saturday.value">
+                  <p class="error-message ml-1"
+                    *ngIf="form.controls.saturdayFrom.value.number > form.controls.saturdayTo.value.number">Please
+                    select valid timings</p>
+                </ng-container>
+              </div>
+            </div> -->
+          </div>
+          <div class="row row-mar">
+            <div class="col-sm-6 col-xl-4 pl-0">
+              <p-checkbox formControlName="sunday" binary="true" inputId="binary"></p-checkbox>
+              <span class="time-lable">Sunday</span>
+            </div>
+            <div class="col-xl-8 col-sm-12 mar-bot">
+              <div class="row display-flex">
+                <span class="time-lable">From</span>
+                <p-dropdown styleClass="create-venue-time" [options]="timings" formControlName="sundayFrom"
+                  placeholder="" optionLabel="key" [showClear]="false"></p-dropdown>
+                <span class="time-lable">To</span>
+                <p-dropdown styleClass="create-venue-time" [options]="timings" formControlName="sundayTo" placeholder=""
+                  optionLabel="key" [showClear]="false"></p-dropdown>
+              </div>
+              <div class="row">
+                <ng-container *ngIf="form.controls.sunday.value">
+                  <p class="error-message ml-1"
+                    *ngIf="form.controls.sundayFrom.value.number > form.controls.sundayTo.value.number">Please select
+                    valid timings</p>
+                </ng-container>
+              </div>
+            </div>
+            <!-- <div class="col-sm-4 mar-bot">
+              <div class="row">
+                <ng-container *ngIf="form.controls.sunday.value">
+                  <p class="error-message ml-1"
+                    *ngIf="form.controls.sundayFrom.value.number > form.controls.sundayTo.value.number">Please select
+                    valid timings</p>
+                </ng-container>
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="mb-3">
+            <p class="lable-head">Type of event</p>
+            <div>
+              <p-radioButton name="groupname" value="indoor" label="Indoor Event"
+                [formControl]="form.controls['eventType']">
+              </p-radioButton>
+            </div>
+            <div>
+              <p-radioButton name="groupname" value="outdoor" label="Outdoor Event"
+                [formControl]="form.controls['eventType']">
+              </p-radioButton>
+            </div>
+          </div>
+          <div>
+            <p class="lable-head">Total Venue Capacity</p>
+            <input type="number" pInputText placeholder="Enter the seating capacity" class="form-control mb-2"
+              formControlName="totalCapacity" style="width: 100%;">
+          </div>
+          <div class="mb-3">
+            <p class="lable-head">Upload Logo/Picture</p>
+            <div class="row row-mar">
+              <ng-container *ngFor="let image of selectedFile; let i = index">
+                <div class="img-cross-wrapper" (click)="showImageDialog(image)">
+                  <img [src]="image.venueImages" class="start-icon" />
+                  <a href="javascript:;" (click)="deleteImage(image, i)"><i class="fa fa-times img-cross"
+                      aria-hidden="true"></i></a>
+                </div>
+              </ng-container>
+              <!-- <div class="img-cross-wrapper">
+              <img src="../../../../../assets/img/svg/document.svg" class="start-icon" />
+              <i class="fa fa-times img-cross" aria-hidden="true"></i>
+            </div> -->
+              <!-- <img src="../../../../../assets/img/svg/document.svg" class="start-icon" /> -->
+              <div>
+                <a href="javascript:;" (click)="openPopup('#logoupload')"><i class="fa fa-plus icon"
+                    aria-hidden="true"></i></a>
+                <input id="logoupload" type="file" size="60" accept="image/*" (change)="onUploadPicture($event)" hidden>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sub-venue-main">
+      <div>
+        <p-checkbox formControlName="subVenue" binary="true" (onChange)="showSubVenue($event)" inputId="binary">
+        </p-checkbox>
+        <!-- <input type="checkbox" class="space" (change)="showSubVenue($event)"/> -->
+        <span class="sub-heading">Add sub-venue (option)</span>
+        <span class="info-effect">
+          <i class="ft-info ml-2"
+            pTooltip="If your primary venue has multiple sub-venue/rooms/lowns/halls/screens/etc. Use this caption to create those and specify the sub-venue capacity"
+            tooltipPosition="bottom"></i>
+        </span>
+      </div>
+
+      <div class="row row-mar">
+        <div *ngIf="isShowSubVenue">
+          <div class="flex-wrap">
+            <div class="mr-2 mb-2" *ngFor="let item of subVenueList;let i = index">
+              <div>
+                <div style="justify-content: space-between; display: flex;margin: 10px 0px;">
+                  <p class="lable-head">Sub-Venue {{i+1}}</p>
+                  <a href="javascript:void;" (click)="deleteSubVenue(item, i)"><i class="ft-trash-2 mr-2"></i></a>
+                </div>
+                <div>
+                  <input type="text" pInputText placeholder="Enter name of sub-venue" value={{item.subVenueName}}
+                    (input)="changeSubVenueName($event, i)" class="form-control mb-2" style="width: 100%;">
+                  <p class="error-message" *ngIf="item.subVenueName === '' && isSubmit">Please enter sub-venue name</p>
+                </div>
+                <div>
+                  <input type="number" placeholder="Enter capacity of sub-venue"
+                    (input)="changeSubVenueCapacity($event, i)" value={{item.subVenueCapacity}}
+                    class="form-control mb-2" style="width: 100%;">
+                  <p class="error-message" *ngIf="!item.subVenueCapacity && isSubmit">Please enter sub-venue capacity
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="subVenueList.length > 0">
+            <button class="custom-btn theme-btn ml-2 text-center button-with-icon" (click)="addSubVenue()"><i
+                aria-hidden="true" class="fa fa-plus icon"></i>Add More</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+  <div class=" flex">
+    <button class="custom-btn venue-btn" (click)="goBack()">
+      Cancel
+    </button>
+    <button class="custom-btn venue-green" type="submit" (click)="createVenue()">
+      {{venueDetailId ? 'Update' : 'Create'}}
+    </button>
+  </div>
+</div>
+<p-dialog [draggable]="false" modal="true" [responsive]="true" [style]="{minWidth: '800px'}" appendTo="body"
+  blockScroll="true" showHeader="false" [(visible)]="showImageModal">
+  <img style="height: 500px;width: 800px" [src]="imageURL" />
+  <!-- <p-galleria [value]="selectedFile">
+    <ng-template pTemplate="item" let-item>
+      <img [src]="item.venueImages" style="width: 100%;" />
+    </ng-template>
+    <ng-template pTemplate="thumbnail" let-item>
+      <div class="p-grid p-nogutter p-justify-center">
+        <img [src]="item.thumbnailImageSrc" />
+      </div>
+    </ng-template>
+  </p-galleria> -->
+</p-dialog>

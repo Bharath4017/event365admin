@@ -1,0 +1,218 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+  <div class="section-heading section-head-with-button">
+    <div class="section-title">
+      <p>Venue List</p>
+    </div>
+  </div>
+  <div *ngIf="CompanyListing" class="tabular-data-wrapper">
+    <p-table #dt [columns]="cols" [value]="CompanyListing" [responsive]="true" styleClass="faq-table"
+      [alwaysShowPaginator]="false">
+      <!-- <ng-template pTemplate="caption">
+        <div style="text-align: right">
+        
+          <input readonly type="text" pInputText size="50" placeholder=" Venue Search..."
+            (input readonly)="dt.filterGlobal($event.target.value, 'contains')" class="form-control mb-2" style="width: auto;">
+        </div>
+      </ng-template> -->
+      <ng-template pTemplate="caption">
+        <div>
+          <div class="row">
+            <div class="col-sm-7 pl-0">
+              <div class="row">
+                <div class="col-sm-6">
+                  <input type="text" pInputText size="40" placeholder="Search..." (input)="searchVenueList($event)"
+                    class="form-control mb-2" style="width: 100%;">
+                </div>
+                <div class="col-sm-5">
+                  <p-dropdown [options]="sortByArray" [(ngModel)]="selectedSortBy" optionLabel="name"
+                    (onChange)="selectSortValue($event)" placeholder='Sort By' [style]="{width: '100%'}"></p-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-5 pr-0">
+              <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-4">
+                  <button type="button" pButton icon="fa fa-map" iconPos="left" label="Map View"
+                    style="background-color: #8E71B5;"  routerLink='/map-view'>
+                  </button>
+                </div>
+                <div class="col-sm-5 text-right">
+                  <button type="button" pButton icon="fa fa-plus-square" iconPos="left" label="Create a Venue"
+                    style="background-color: #8E71B5;"  routerLink='/create-venue'>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 8%;">Sr.No.</th>
+          <th style="text-align: center; width: 16%;">Name</th>
+          <th style="text-align: center;width: 14%;">Image</th>
+          <th style="text-align: center;width: 14%;">Address</th>
+          <!-- <th style="text-align: center; width: 14%;">Organiser</th>
+          <th style="text-align: center; width: 14%;">Sub-Venues</th>
+          <th style="text-align: center; width: 14%;">Total Capacity</th>
+          <th style="text-align: center; width: 14%;">Alloted Tickets</th>
+          <th style="text-align: center; width: 14%;">Ticket/Capacity%</th>
+          <th style="text-align: center; width: 9%;">Status</th>
+          <th style="text-align: center; width: 9%;">View</th> -->
+          <th style="text-align: center; width: 14%;">Organiser</th>
+          <th style="text-align: center; width: 9%;">Sub-Venues</th>
+          <th style="text-align: center; width: 9%;">Total Capacity</th>
+          <th style="text-align: center; width: 9%;">Alloted Tickets</th>
+          <th style="text-align: center; width: 9%;">Ticket/Capacity %</th>
+          <th style="text-align: center; width: 9%;">Status</th>
+          <th style="text-align: center; width: 9%;">View</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-columns="columns" let-itemb let-i="rowIndex">
+        <tr [pSelectableRow]="rowData">
+          <td>{{ i + 1 }}</td>
+          <td><span *ngFor="let col of columns" [ngSwitch]="col.field" class="ui-column-title">
+              <input readonly [ngSwitch]="col.field" *ngSwitchCase="venueName" pInputText type="text" (input
+                readonly)="dt.filter($event.target.value, col.field, 'contains')">
+              Company</span>{{item?.venueName ? item?.venueName : 'N/A'}}</td>
+          <td><span class="ui-column-title">Image</span> <img src="{{item?.venueImages[0]?.venueImages}}"
+              style="width: 100%;height: 97px;">
+          </td>
+          <td><span *ngFor="let col of columns" [ngSwitch]="col.field" class="ui-column-title">
+              <input readonly [ngSwitch]="col.field" *ngSwitchCase="venueAddress" pInputText type="text" (input
+                readonly)="dt.filter($event.target.value, col.field, 'contains')">
+              Company</span>{{item?.venueAddress | stripTags | truncate: 50 :'...': true}}</td>
+          <td><span *ngFor="let col of columns" [ngSwitch]="col.field" class="ui-column-title">
+              <input readonly [ngSwitch]="col.field" *ngSwitchCase="users" pInputText type="text" (input
+                readonly)="dt.filter($event.target.value, col.field, 'contains')">
+              Name</span>{{item?.users?.name ? item?.users?.name : 'N/A'}}</td>
+          <td><span class="ui-column-title">Sub-Venues</span>{{item?.subVenues[0]?.subVenueCount ?
+            item?.subVenues[0]?.subVenueCount : 0 }}</td>
+          <td><span class="ui-column-title">Total Capacity</span>{{item?.venueCapacity ? item?.venueCapacity : 0}}</td>
+          <td><span class="ui-column-title">Alloted Tickets</span>{{item?.allotedTicket ? item?.allotedTicket : 0}}</td>
+          <td class="padding-0">
+            <span class="ui-column-title">Ticket/Capacity%</span>
+            <span *ngIf="isEditTicketCapacity != item.id" (click)="editTicketCapacity(item)">
+              {{item?.ticketCapacityPercent ? item?.ticketCapacityPercent : 0}}%
+              <i class="fa fa-pencil clr-blue" style="cursor: pointer;" aria-hidden="true"></i>
+            </span>
+            <div class="input-div-wrap" *ngIf="isEditTicketCapacity == item.id">
+              <input class="input-div" type="number" value={{item?.ticketCapacityPercent}} pInputText
+                (input)="handleEditTicketCapacity($event, item, i)" />
+              <div class="true-false">
+                <i class="fa fa-check clr-green" style="cursor: pointer;" aria-hidden="true"
+                  (click)="saveEditTicketCapacity(item, i)"></i>
+                <i class="fa fa-times clr-red" style="cursor: pointer;" aria-hidden="true"
+                  (click)="cancelEditTicketCapacity()"></i>
+              </div>
+            </div>
+
+          </td>
+
+          <td><span class="ui-column-title">View</span>
+            <div class="d-flex align-items-center">
+              <app-active-swtich [checked]="item.is_active" (change)="statusChange($event, item.id)" class="ml-1">
+              </app-active-swtich>
+            </div>
+          </td>
+          <td class="action-buttons">
+            <span class="ui-column-title">Action</span>
+            <button (click)="goTo(item.id)" class="custom-btn custom-btn-small blue-btn text-center edit" style="margin-right: 4px !important;
+              min-width: 3em !important;
+              height: 2.4em !important;color:#ce0017"><i class="fa fa-eye" aria-hidden="true"></i></button>
+
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td class="text-center text-danger" colspan="11">No Record Found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <p-paginator [rows]="10" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"></p-paginator>
+  </div>
+</div>
+
+<p-dialog [draggable]="false" [header]="itemToEdit? 'Venue Details':'Add New Company'" modal="true"
+  [(visible)]="displayAddEditAbout" [responsive]="true" [style]="{minWidth: '800px'}" appendTo="body" maximizable="true"
+  blockScroll="true" [closeOnEscape]="false" (onHide)="closeAddEditCompany()">
+  <div class="dialog-content">
+
+    <form class="custom-form" [formGroup]="addEditCompanyForm" (ngSubmit)="addUpdateCompany()">
+      <div class="custom-form-control">
+        <span class="key">Name</span>
+        <span class="value">
+          <input readonly type="text" name="venueName" id="venueName" formControlName="venueName">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditCompanyForm.controls.venueName.invalid && (addEditCompanyForm.controls.venueName.dirty || addEditCompanyForm.controls.venueName.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditCompanyForm.controls.venueName.errors.required || addEditCompanyForm.controls.venueName.errors.whitespace">Venue
+            is required.</span>
+        </span>
+      </div>
+
+      <div class="custom-form-control">
+        <span class="key">Address</span>
+        <span class="value">
+          <input readonly type="text" name="venueAddress" id="venueAddress" formControlName="venueAddress">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditCompanyForm.controls.venueAddress.invalid && (addEditCompanyForm.controls.venueAddress.dirty || addEditCompanyForm.controls.venueAddress.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditCompanyForm.controls.venueAddress.errors.required || addEditCompanyForm.controls.venueAddress.errors.whitespace">Venue
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control">
+        <span class="key">Organiser Name</span>
+        <span class="value">
+          <input readonly type="text" name="name" id="name" formControlName="name">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditCompanyForm.controls.name.invalid && (addEditCompanyForm.controls.name.dirty || addEditCompanyForm.controls.name.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditCompanyForm.controls.name.errors.required || addEditCompanyForm.controls.name.errors.whitespace">Name
+            is required.</span>
+        </span>
+      </div>
+
+      <div class="custom-form-control">
+        <span class="key">Organiser Email</span>
+        <span class="value">
+          <input readonly type="text" name="email" id="email" formControlName="email">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditCompanyForm.controls.email.invalid && (addEditCompanyForm.controls.email.dirty || addEditCompanyForm.controls.email.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditCompanyForm.controls.email.errors.required || addEditCompanyForm.controls.email.errors.whitespace">mail
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control">
+        <span class="key">Address</span>
+        <span class="value">
+          <input readonly type="text" name="venueAddress" id="venueAddress" formControlName="venueAddress">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditCompanyForm.controls.venueAddress.invalid && (addEditCompanyForm.controls.venueAddress.dirty || addEditCompanyForm.controls.venueAddress.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditCompanyForm.controls.venueAddress.errors.required || addEditCompanyForm.controls.venueAddress.errors.whitespace">Venue
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control">
+        <img [src]="addEditCompanyForm.value.venueImages || 'assets/project-images/City-bg.png'" height="100"
+          width="100" />
+      </div>
+
+      <div class="custom-form-control decision-box">
+        <!-- <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel"
+          (click)="closeAddEditCompany()"><i class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+      -->
+      </div>
+    </form>
+  </div>
+</p-dialog>

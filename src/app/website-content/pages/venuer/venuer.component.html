@@ -1,0 +1,187 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+
+  <div class="section-heading section-head-with-button">
+    <div class="section-title">
+      <p>Venue Owner List</p>
+    </div>
+  </div>
+  <div *ngIf="OrganisersListing" class="tabular-data-wrapper">
+    <p-table [value]="OrganisersListing" #dt [columns]="cols" [responsive]="true" styleClass="faq-table"
+      [alwaysShowPaginator]="false">
+      <ng-template pTemplate="caption">
+
+        <!-- <div class="ui-helper-clearfix">
+          <input readonly type="text" pInputText size="50" placeholder="VenueOwner Search..."
+            (input readonly)="dt.filterGlobal($event.target.value, 'contains')" class="form-control mb-2" style="width: auto;">
+        </div> -->
+        <div class="pl-0 col-sm-8">
+          <div class="row">
+            <div class="pl-0 col-sm-6">
+              <input type="text" pInputText size="40" placeholder="Search..." (input)="searchList($event)"
+                class="form-control mb-2" style="width: 100%;">
+            </div>
+            <div class="col-sm-5 text-left">
+              <p-dropdown [style]="{float:'left'}" [options]="sortByArray" [(ngModel)]="selectedSortBy"
+                optionLabel="name" (onChange)="selectSortValue($event)" placeholder='Sort By'></p-dropdown>
+            </div>
+          </div>
+        </div>
+
+      </ng-template>
+
+      <ng-template pTemplate="header" let-columns>
+
+        <tr>
+          <th style="width: 70px !important;">Sr.No.</th>
+          <th>Name</th>
+          <th style="width: 220px !important;">Email</th>
+          <th>PhoneNo</th>
+          <th>A/C Verified</th>
+          <th style="width: 150px !important;">Status</th>
+          <th style="width: 80px !important;">Action</th>
+          <th style="width:80px !important;">View </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-columns="columns" let-itemb let-i="rowIndex">
+        <tr [pSelectableRow]="rowData">
+          <td>{{ i + 1 }}</td>
+          <td><span class="ui-column-title">Name</span>{{item.name ? item.name : 'N/A'}}</td>
+          <td><span class="ui-column-title">Email</span>{{item.email ? item.email : 'N/A'}}</td>
+          <td><span class="ui-column-title">phoneNo</span>{{item.phoneNo ? item.phoneNo : 'N/A'}}</td>
+          <td><span class="ui-column-title">Verified Status Change</span>
+            <div class="d-flex align-items-center">
+              <app-active-swtich [checked]="item.isVerified" (change)="isVerifiedStatus($event, item.id)" class="ml-1">
+              </app-active-swtich>
+            </div>
+          </td>
+        
+          <td><span class="ui-column-title">Status Change</span>
+            <div class="d-flex align-items-center">
+              <!-- <app-active-swtich [checked]="item.is_active" (change)="statusChange($event, item.id)" class="ml-1">
+              </app-active-swtich> -->
+              <div class="dropdown col-md-12">
+                <button class="btn dropdown dropdown-toggle wid-100 drop-button" type="button" data-toggle="dropdown"
+                  [ngClass]="{'active-color': item?.accountStatus == 'active', 'flagged-color': item?.accountStatus == 'flagged', 'inactive-color': item?.accountStatus == 'inactive'}">
+                  {{item?.accountStatus | titlecase}}
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu menu-width">
+                  <li style="display: flex;" *ngFor="let status of statusArray"
+                    (click)="changeStatus(status, item.id, i)">
+                    <a class="dropdown-item" href="javaScript:void(0)"
+                      [ngClass]="{'active': item?.accountStatus == status.value}">
+                      {{status.name}}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </td>
+          <td style="width:100px" class="action-buttons"><button class="action-delete" (click)="DeleteAction(item.id)">delete</button></td>
+          <td class="action-buttons">
+            <span class="ui-column-title">Action</span>
+            <button (click)="openAddEditOrganisers(item)" class="custom-btn custom-btn-small blue-btn text-center edit"
+              style="
+              margin-right: 4px !important;
+              min-width: 4em !important;
+              height: 2.4em !important;color:#ce0017
+          "><i class="fa fa-eye " aria-hidden="true"></i></button>
+            <!-- <button class="custom-btn custom-btn-small red-btn text-center" (click)="deleteOrganiser(item)"
+              style=" margin-right: 4px !important;min-width: 4em !important;height: 2.4em !important;"><i
+                class="fa fa-trash-o" aria-hidden="true"></i></button> -->
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td class="text-center text-danger" colspan="7">No Record Found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <p-paginator [rows]="10" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"></p-paginator>
+  </div>
+
+</div>
+
+<p-dialog [draggable]="false" [header]="itemToEdit? 'Venue Owner Details':'Add New VenueOwner'" modal="true"
+  [(visible)]="displayAddEditOrganiser" [responsive]="true" [style]="{minWidth: '800px'}" appendTo="body"
+  maximizable="true" blockScroll="true" [closeOnEscape]="false" (onHide)="closeAddEditOrganisers()">
+  <div class="dialog-content">
+    <div *ngIf="itemToEdit" class="dialog-content">
+      <div *ngIf="OrganisersListing" class="tabular-data-wrapper">
+        <div class="custom-form-control" style="text-align: center;border-radius: 100%;margin-bottom: 0px;">
+          <img [src]="itemToEdit.profilePic || 'assets/project-images/City-bg.png'" height="150" width="150"
+            style=" border-radius: 100%; " />
+        </div>
+        <div class="row" style="background-color: #e8e8e8;font-size: initial;padding: 1%;">Organiser</div>
+        <div class="row" style="font-size: 15px;padding: 5px;">
+          <div class="custom-form-control col-sm-5">
+
+            <b style="color: #000;">Name: </b>
+            {{itemToEdit?.name}}
+          </div>
+          <div class="custom-form-control col-sm-5">
+            <b style="color: #000;">Email: </b>
+            {{itemToEdit?.email}}
+          </div>
+        </div>
+
+        <div class="row" style="font-size: 15px;padding: 5px;">
+
+          <div class="custom-form-control col-sm-5">
+            <b style="color: #000;">Current Amounts: </b> {{itemToEdit?.currentAmounts}}
+          </div>
+          <div class="custom-form-control col-sm-5">
+            <b style="color: #000;">Total Amount : </b> {{itemToEdit?.totalAmount}}
+          </div>
+        </div>
+        <div class="row" style="font-size: 15px;padding: 5px;">
+          <div class="custom-form-control col-sm-5">
+            <b style="color: #000;">PhoneNo: </b> {{itemToEdit?.phoneNo}}
+          </div>
+          <div class="custom-form-control col-sm-5">
+            <b style="color: #000;">Address : </b> {{itemToEdit?.address}}
+          </div>
+        </div>
+        <div class="row" style="background-color: #e8e8e8;font-size: initial;padding: 1%;">Bank Details</div>
+        <div class="row" style="font-size: 15px;padding: 5px;">
+          <div class="custom-form-control col-sm-5">
+            <b style="color: #000;">Bank Name : </b>
+            <!-- {{itemToEdit?.bank_details.bankName}} -->
+          </div>
+          <div class="custom-form-control col-sm-5">
+            <b style="color: #000;">AccountNo : </b>
+            <!-- {{itemToEdit?.bank_details.AccountNo}} -->
+          </div>
+        </div>
+        <div class="row" style="font-size: 15px;padding: 5px;">
+          <div class="custom-form-control col-sm-5">
+            <b style="color: #000;">Routing No : </b>
+            <!-- {{itemToEdit?.bank_details.routingNo}} -->
+          </div>
+        </div>
+        <!-- <div class="row" style="background-color: #e8e8e8;font-size: initial;padding: 1%;">Withdrawn status</div>
+        <div class="row" style="font-size: 15px;padding: 5px;">
+          <div class="custom-form-control col-sm-5">
+            <b style="color: #000;">Req Amount Name : </b> 
+            {{itemToEdit.withdrawnAmount}}
+          </div>
+          <div class="custom-form-control col-sm-5">
+            <b style="color: #000;">Transition Status : </b>
+            {{itemToEdit.transStatus}}
+          </div>
+        </div> -->
+
+
+        <div class="row" style="padding-left: 79%;padding-top: 4%;">
+          <!-- <button type="reset" title="Cancel" style="
+    background-color: #183857 !important;
+  " class="custom-btn red-btn text-center button-with-icon cancel" (click)="closeAddEditCompany()"><i
+              class="fa fa-times icon" aria-hidden="true"></i>Cancel</button> -->
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</p-dialog>

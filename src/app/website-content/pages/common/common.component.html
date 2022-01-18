@@ -1,0 +1,816 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+
+  <div class="section-heading section-head-with-button">
+    <div class="section-title">
+      <p>Common Pages Content </p>
+      <h5>Total Experience</h5>
+    </div>
+  </div>
+  <div *ngIf="AccurateListing" class="tabular-data-wrapper">
+    <p-table [value]="AccurateListing" [responsive]="true" styleClass="faq-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Min Experience</th>
+          <th>Max Experience</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td><span class="ui-column-title">heading</span>{{item.experience.minExp}}</td>
+          <td><span class="ui-column-title">sub_heading</span>{{item.experience.maxExp}}</td>
+          <td class="action-buttons">
+            <span class="ui-column-title">Action</span>
+            <button (click)="openAddEditExp(item)" class="custom-btn custom-btn-small blue-btn text-center edit" style="
+              margin-right: 4px !important;
+              min-width: 4em !important;
+              height: 2.4em !important;
+          "><i class="fa fa-pencil" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <!-- //Email change -->
+  <div class="section-heading section-head-with-button">
+    <div class="section-title" style="padding-top: 3%;">
+      <h5> Email</h5>
+    </div>
+  </div>
+  <div *ngIf="AccurateListing" class="tabular-data-wrapper">
+    <p-table [value]="AccurateListing" [responsive]="true" styleClass="faq-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Email Text </th>
+          <th>Email Link </th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td><span class="ui-column-title">emailData</span>{{item.emailData.description}}</td>
+          <td><span class="ui-column-title">emailData</span>{{item.emailData.heading}}</td>
+
+          <td class="action-buttons">
+            <span class="ui-column-title">Action</span>
+            <button (click)="openAddEditEmail(item)" class="custom-btn custom-btn-small blue-btn text-center edit"
+              style="
+              margin-right: 4px !important;
+              min-width: 4em !important;
+              height: 2.4em !important;
+          "><i class="fa fa-pencil" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <!-- //Blog change -->
+  <div class="section-heading section-head-with-button">
+    <div class="section-title" style="padding-top: 3%;">
+      <h5> Blog</h5>
+    </div>
+  </div>
+  <div *ngIf="AccurateListing" class="tabular-data-wrapper">
+    <p-table [value]="AccurateListing" [responsive]="true" styleClass="faq-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Blog</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td><span class="ui-column-title">Blog</span>{{item.blogData.heading}}</td>
+
+          <td class="action-buttons">
+            <span class="ui-column-title">Action</span>
+            <button (click)="openAddEditBlog(item)" class="custom-btn custom-btn-small blue-btn text-center edit" style="
+              margin-right: 4px !important;
+              min-width: 4em !important;
+              height: 2.4em !important;
+          "><i class="fa fa-pencil" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+
+  <!-- //Team change -->
+  <div class="section-heading section-head-with-button">
+    <div class="section-title" style="padding-top: 3%;">
+      <h5>Team</h5>
+    </div>
+  </div>
+  <div *ngIf="AccurateListing" class="tabular-data-wrapper">
+    <p-table [value]="AccurateListing" [responsive]="true" styleClass="faq-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Team</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td><span class="ui-column-title">Emai</span>{{item.teamData.heading}}</td>
+
+          <td class="action-buttons">
+            <span class="ui-column-title">Action</span>
+            <button (click)="openAddEditTeam(item)" class="custom-btn custom-btn-small blue-btn text-center edit" style="
+              margin-right: 4px !important;
+              min-width: 4em !important;
+              height: 2.4em !important;
+          "><i class="fa fa-pencil" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <!-- // social change -->
+  <div class="section-heading section-head-with-button">
+    <div class="section-title" style="padding-top: 3%;">
+      <h5>Social Links</h5>
+    </div>
+  </div>
+  <div *ngIf="AccurateListing" class="tabular-data-wrapper">
+    <p-table [value]="AccurateListing" [responsive]="true" styleClass="faq-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Facebook</th>
+          <th>Linkedin</th>
+          <th>Twitter</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td><span class="ui-column-title">Facebook</span>{{item.socialData.heading}}</td>
+          <td><span class="ui-column-title">Linkedin</span>{{item.socialData.sub_heading}}</td>
+          <td><span class="ui-column-title">Twitter</span>{{item.socialData.description}}</td>
+          <td class="action-buttons">
+            <span class="ui-column-title">Action</span>
+            <button (click)="openAddEditSocial(item)" class="custom-btn custom-btn-small blue-btn text-center edit"
+              style="
+                margin-right: 4px !important;
+                min-width: 4em !important;
+                height: 2.4em !important;
+            "><i class="fa fa-pencil" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <!-- //invite Data -->
+  <div class="section-heading section-head-with-button">
+    <div class="section-title" style="padding-top: 3%;">
+      <h5>Invite Page Content</h5>
+    </div>
+  </div>
+  <div *ngIf="AccurateListing" class="tabular-data-wrapper">
+    <p-table [value]="AccurateListing" [responsive]="true" styleClass="faq-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Heading</th>
+          <th>Description</th>
+          <th>Button</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td><span class="ui-column-title">Facebook</span>{{item.inviteData.heading}}</td>
+          <td><span class="ui-column-title">Linkedin</span>{{item.inviteData.description}}</td>
+          <td><span class="ui-column-title">Twitter</span>{{item.inviteData.sub_heading}}</td>
+          <td class="action-buttons">
+            <span class="ui-column-title">Action</span>
+            <button (click)="openAddEditInvite(item)" class="custom-btn custom-btn-small blue-btn text-center edit"
+              style="
+              margin-right: 4px !important;
+              min-width: 4em !important;
+              height: 2.4em !important;
+          "><i class="fa fa-pencil" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+
+  <!-- //Offer Data -->
+  <div class="section-heading section-head-with-button">
+    <div class="section-title" style="padding-top: 3%;">
+      <h5>Email Page Content</h5>
+    </div>
+  </div>
+  <div *ngIf="AccurateListing" class="tabular-data-wrapper">
+    <p-table [value]="AccurateListing" [responsive]="true" styleClass="faq-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Heading</th>
+          <th>Description</th>
+          <th>Button</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td><span class="ui-column-title">Heading</span>{{item.offerData.heading}}</td>
+          <td><span class="ui-column-title">Description</span>{{item.offerData.description | stripTags | truncate: 100
+            :'...': true}}</td>
+          <td><span class="ui-column-title">Button</span>{{item.offerData.sub_heading}}</td>
+          <td class="action-buttons">
+            <span class="ui-column-title">Action</span>
+            <button (click)="openAddEditOffer(item)" class="custom-btn custom-btn-small blue-btn text-center edit"
+              style="
+              margin-right: 4px !important;
+              min-width: 4em !important;
+              height: 2.4em !important;
+          "><i class="fa fa-pencil" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+
+  <!-- //Personal change -->
+  <div class="section-heading section-head-with-button">
+    <div class="section-title" style="padding-top: 3%;">
+      <h5>Personal Details Page Content</h5>
+    </div>
+  </div>
+  <div *ngIf="AccurateListing" class="tabular-data-wrapper">
+    <p-table [value]="AccurateListing" [responsive]="true" styleClass="faq-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Heading</th>
+          <th>Description</th>
+          <th>Company</th>
+          <th>Current Level</th>
+          <th>Education</th>
+          <th>Experience</th>
+          <th>Focus Area</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td><span class="ui-column-title">emailData</span>{{item.personalDetails.heading}}</td>
+          <td><span class="ui-column-title">Description</span>{{item.personalDetails.description | stripTags | truncate:
+            100 :'...': true}}</td>
+          <td><span class="ui-column-title">emailData</span>{{item.personalDetails.sub_heading}}</td>
+          <td><span class="ui-column-title">emailData</span>{{item.personalDetails.sub_description}}</td>
+          <td><span class="ui-column-title">emailData</span>{{item.personalDetails.description2}}</td>
+          <td><span class="ui-column-title">emailData</span>{{item.personalDetails.description3}}</td>
+          <td><span class="ui-column-title">emailData</span>{{item.personalDetails.description4}}</td>
+          <td class="action-buttons">
+            <span class="ui-column-title">Action</span>
+            <button (click)="openAddEditSelf(item)" class="custom-btn custom-btn-small blue-btn text-center edit" style="
+              margin-right: 4px !important;
+              min-width: 4em !important;
+              height: 2.4em !important;
+          "><i class="fa fa-pencil" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+
+  <!-- //Free Package change -->
+  <div class="section-heading section-head-with-button">
+    <div class="section-title" style="padding-top: 3%;">
+      <h5>Free Package Page Content</h5>
+    </div>
+  </div>
+  <div *ngIf="AccurateListing" class="tabular-data-wrapper">
+    <p-table [value]="AccurateListing" [responsive]="true" styleClass="faq-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Heading</th>
+          <th>Description</th>
+          <th>Confirm Button </th>
+          <th>Edit Button</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td><span class="ui-column-title">Heading</span>{{item.freePageData.heading}}</td>
+          <td><span class="ui-column-title">Description</span>{{item.freePageData.description | stripTags | truncate:
+            100 :'...': true}}</td>
+          <td><span class="ui-column-title">button</span>{{item.freePageData.description2}}</td>
+          <td><span class="ui-column-title">button2</span>{{item.freePageData.description3}}</td>
+
+          <td class="action-buttons">
+            <span class="ui-column-title">Action</span>
+            <button (click)="openAddEditFree(item)" class="custom-btn custom-btn-small blue-btn text-center edit" style="
+              margin-right: 4px !important;
+              min-width: 4em !important;
+              height: 2.4em !important;
+          "><i class="fa fa-pencil" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+
+</div>
+
+
+
+
+
+
+<!-- //experience -->
+<p-dialog [draggable]="false" [header]="itemToEdit? 'Edit Total Experience':'Add New Total Experience'" modal="true"
+  [(visible)]="displayAddEditExp" [responsive]="true" [style]="{minWidth: '800px'}" appendTo="body" maximizable="true"
+  blockScroll="true" [closeOnEscape]="false" (onHide)="closeAddEditExp()">
+  <div class="dialog-content">
+
+    <form class="custom-form" [formGroup]="addEditAccurateForm" (ngSubmit)="addUpdateCommonPages()">
+      <div class="custom-form-control">
+        <span class="key"> Min Experience</span>
+        <span class="value">
+          <input type="number" min="0" max="70" name="minExp" id="minExp" formControlName="minExp" required>
+        </span>
+        <span class="error-message"
+          *ngIf="addEditAccurateForm.controls.minExp.invalid && (addEditAccurateForm.controls.minExp.dirty || addEditAccurateForm.controls.minExp.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditAccurateForm.controls.minExp.errors.required || addEditAccurateForm.controls.minExp.errors.whitespace">Min
+            Experience
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control">
+        <span class="key"> Max Experience</span>
+        <span class="value">
+          <input type="number" min="0" max="100" name="maxExp" id="maxExp" formControlName="maxExp" required>
+        </span>
+        <span class="error-message"
+          *ngIf="addEditAccurateForm.controls.maxExp.invalid && (addEditAccurateForm.controls.maxExp.dirty || addEditAccurateForm.controls.maxExp.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditAccurateForm.controls.maxExp.errors.required || addEditAccurateForm.controls.maxExp.errors.whitespace">Max
+            Experience
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control decision-box">
+        <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel"
+          (click)="closeAddEditExp()"><i class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+        <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+            class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+
+<!-- //Email  -->
+<p-dialog [draggable]="false" [header]="itemToEdit? 'Edit Email':'Add New Email'" modal="true"
+  [(visible)]="displayAddEditEmail" [responsive]="true" [style]="{minWidth: '800px'}" appendTo="body" maximizable="true"
+  blockScroll="true" [closeOnEscape]="false" (onHide)="closeAddEditEmail()">
+  <div class="dialog-content">
+
+    <form class="custom-form" [formGroup]="addEditForm" (ngSubmit)="addUpdateCommonPages()">
+      <div class="custom-form-control">
+        <span class="key">Email Text</span>
+        <span class="value">
+          <input type="text" name="description" id="description" formControlName="description">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditForm.controls.description.invalid && (addEditForm.controls.description.dirty || addEditForm.controls.description.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditForm.controls.description.errors.required || addEditForm.controls.description.errors.whitespace">Email
+            Text
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control">
+        <span class="key">Email Link</span>
+        <span class="value">
+          <input type="text" name="heading" id="heading" formControlName="heading">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditForm.controls.heading.invalid && (addEditForm.controls.heading.dirty || addEditForm.controls.heading.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditForm.controls.heading.errors.required || addEditForm.controls.heading.errors.whitespace">Email
+            Link
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control decision-box">
+        <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel"
+          (click)="closeAddEditEmail()"><i class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+        <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+            class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+      </div>
+
+    </form>
+  </div>
+</p-dialog>
+
+<!-- //Blog  -->
+<p-dialog [draggable]="false" [header]="itemToEdit? 'Edit Blog':'Add New Email'" modal="true"
+  [(visible)]="displayAddEditBlog" [responsive]="true" [style]="{minWidth: '800px'}" appendTo="body" maximizable="true"
+  blockScroll="true" [closeOnEscape]="false" (onHide)="closeAddEditBlog()">
+  <div class="dialog-content">
+
+    <form class="custom-form" [formGroup]="addEditBlogForm" (ngSubmit)="addUpdateCommonPages()">
+      <div class="custom-form-control">
+        <span class="key">Blog</span>
+        <span class="value">
+          <input type="text" name="heading" id="heading" formControlName="heading">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditBlogForm.controls.heading.invalid && (addEditBlogForm.controls.heading.dirty || addEditBlogForm.controls.heading.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditBlogForm.controls.heading.errors.required || addEditBlogForm.controls.heading.errors.whitespace">Blog
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control decision-box">
+        <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel"
+          (click)="closeAddEditBlog()"><i class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+        <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+            class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+      </div>
+
+    </form>
+  </div>
+</p-dialog>
+
+<!-- //Team  -->
+<p-dialog [draggable]="false" [header]="itemToEdit? 'Edit Team':'Add New Email'" modal="true"
+  [(visible)]="displayAddEditTeam" [responsive]="true" [style]="{minWidth: '800px'}" appendTo="body" maximizable="true"
+  blockScroll="true" [closeOnEscape]="false" (onHide)="closeAddEditTeam()">
+  <div class="dialog-content">
+
+    <form class="custom-form" [formGroup]="addEditTeamForm" (ngSubmit)="addUpdateCommonPages()">
+      <div class="custom-form-control">
+        <span class="key">Team</span>
+        <span class="value">
+          <input type="text" name="heading" id="heading" formControlName="heading">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditTeamForm.controls.heading.invalid && (addEditTeamForm.controls.heading.dirty || addEditTeamForm.controls.heading.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditTeamForm.controls.heading.errors.required || addEditTeamForm.controls.heading.errors.whitespace">Team
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control decision-box">
+        <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel"
+          (click)="closeAddEditTeam()"><i class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+        <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+            class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+      </div>
+
+    </form>
+  </div>
+</p-dialog>
+
+<!-- //sOCIAL  -->
+<p-dialog [draggable]="false" [header]="itemToEdit? 'Edit Social Links':'Add New Email'" modal="true"
+  [(visible)]="displayAddEditSocial" [responsive]="true" [style]="{minWidth: '800px'}" appendTo="body"
+  maximizable="true" blockScroll="true" [closeOnEscape]="false" (onHide)="closeAddEditSocial()">
+  <div class="dialog-content">
+
+    <form class="custom-form" [formGroup]="addEditSocailForm" (ngSubmit)="addUpdateCommonPages()">
+      <div class="custom-form-control">
+        <span class="key">Facebook</span>
+        <span class="value">
+          <input type="text" name="heading" id="heading" formControlName="heading">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditSocailForm.controls.heading.invalid && (addEditSocailForm.controls.heading.dirty || addEditSocailForm.controls.heading.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditSocailForm.controls.heading.errors.required || addEditSocailForm.controls.heading.errors.whitespace">Facebook
+            is required.</span>
+        </span>
+      </div>
+
+      <div class="custom-form-control">
+        <span class="key">Linkedin</span>
+        <span class="value">
+          <input type="text" name="sub_heading" id="sub_heading" formControlName="sub_heading">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditSocailForm.controls.sub_heading.invalid && (addEditSocailForm.controls.sub_heading.dirty || addEditSocailForm.controls.sub_heading.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditSocailForm.controls.sub_heading.errors.required || addEditSocailForm.controls.sub_heading.errors.whitespace">Linkedin
+            is required.</span>
+        </span>
+      </div>
+
+      <div class="custom-form-control">
+        <span class="key">Twitter</span>
+        <span class="value">
+          <input type="text" name="description" id="description" formControlName="description">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditSocailForm.controls.description.invalid && (addEditSocailForm.controls.description.dirty || addEditSocailForm.controls.description.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditSocailForm.controls.description.errors.required || addEditSocailForm.controls.description.errors.whitespace">Twitter
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control decision-box">
+        <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel"
+          (click)="closeAddEditSocial()"><i class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+        <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+            class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+
+
+<!-- //Invite  -->
+<p-dialog [draggable]="false" [header]="itemToEdit? 'Edit Invite':'Add New Email'" modal="true"
+  [(visible)]="displayAddEditInvite" [responsive]="true" [style]="{minWidth: '800px'}" appendTo="body"
+  maximizable="true" blockScroll="true" [closeOnEscape]="false" (onHide)="closeAddEditInvite()">
+  <div class="dialog-content">
+
+    <form class="custom-form" [formGroup]="addEditInviteForm" (ngSubmit)="addUpdateCommonPages()">
+      <div class="custom-form-control">
+        <span class="key">Heading</span>
+        <span class="value">
+          <input type="text" name="heading" id="heading" formControlName="heading">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditInviteForm.controls.heading.invalid && (addEditInviteForm.controls.heading.dirty || addEditInviteForm.controls.heading.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditInviteForm.controls.heading.errors.required || addEditInviteForm.controls.heading.errors.whitespace">Heading
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control">
+        <span class="key">Description</span>
+        <span class="value">
+          <textarea _ngcontent-wmm-c14="" class="form-control" name="description" id="description"
+            formControlName="description" placeholder="Enter Description!" rows="3"></textarea>
+        </span>
+        <span class="error-message"
+          *ngIf="addEditInviteForm.controls.description.invalid && (addEditInviteForm.controls.description.dirty || addEditInviteForm.controls.description.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditInviteForm.controls.description.errors.required || addEditInviteForm.controls.description.errors.whitespace">Description
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control">
+        <span class="key">Button</span>
+        <span class="value">
+          <input type="text" name="sub_heading" id="sub_heading" formControlName="sub_heading">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditInviteForm.controls.sub_heading.invalid && (addEditInviteForm.controls.sub_heading.dirty || addEditInviteForm.controls.sub_heading.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditInviteForm.controls.sub_heading.errors.required || addEditInviteForm.controls.sub_heading.errors.whitespace">Button
+            Name
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control decision-box">
+        <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel"
+          (click)="closeAddEditInvite()"><i class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+        <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+            class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+
+<!-- //Offer  -->
+<p-dialog [draggable]="false" [header]="itemToEdit? 'Edit Email Page Content':'Add New Email'" modal="true"
+  [(visible)]="displayAddEditOffer" [responsive]="true" [style]="{minWidth: '800px'}" appendTo="body" maximizable="true"
+  blockScroll="true" [closeOnEscape]="false" (onHide)="closeAddEditOffer()">
+  <div class="dialog-content">
+
+    <form class="custom-form" [formGroup]="addEditOfferForm" (ngSubmit)="addUpdateCommonPages()">
+      <div class="custom-form-control">
+        <span class="key">Heading</span>
+        <span class="value">
+          <input type="text" name="heading" id="heading" formControlName="heading">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditOfferForm.controls.heading.invalid && (addEditOfferForm.controls.heading.dirty || addEditOfferForm.controls.heading.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditOfferForm.controls.heading.errors.required || addEditOfferForm.controls.heading.errors.whitespace">Heading
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control">
+        <span class="key">Description</span>
+        <span class="value">
+          <textarea _ngcontent-wmm-c14="" class="form-control" name="description" id="description"
+            formControlName="description" placeholder="Enter Description!" rows="3"></textarea>
+        </span>
+        <span class="error-message"
+          *ngIf="addEditOfferForm.controls.description.invalid && (addEditOfferForm.controls.description.dirty || addEditOfferForm.controls.description.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditOfferForm.controls.description.errors.required || addEditOfferForm.controls.description.errors.whitespace">Description
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control">
+        <span class="key">Button</span>
+        <span class="value">
+          <input type="text" name="sub_heading" id="sub_heading" formControlName="sub_heading">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditOfferForm.controls.sub_heading.invalid && (addEditOfferForm.controls.sub_heading.dirty || addEditOfferForm.controls.sub_heading.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditOfferForm.controls.sub_heading.errors.required || addEditOfferForm.controls.sub_heading.errors.whitespace">Button
+            Name
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control decision-box">
+        <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel"
+          (click)="closeAddEditOffer()"><i class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+        <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+            class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+
+<!-- //Self  -->
+<p-dialog [draggable]="false" [header]="itemToEdit? 'Edit Personal Details':'Add New Self'" modal="true"
+  [(visible)]="displayAddEditSelf" [responsive]="true" [style]="{minWidth: '800px'}" appendTo="body" maximizable="true"
+  blockScroll="true" [closeOnEscape]="false" (onHide)="closeAddEditSelf()">
+  <div class="dialog-content">
+
+    <form class="custom-form" [formGroup]="addEditSelfForm" (ngSubmit)="addUpdateCommonPages()">
+      <div class="custom-form-control">
+        <span class="key">Heading</span>
+        <span class="value">
+          <input type="text" name="heading" id="heading" formControlName="heading">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditSelfForm.controls.heading.invalid && (addEditSelfForm.controls.heading.dirty || addEditSelfForm.controls.heading.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditSelfForm.controls.heading.errors.required || addEditSelfForm.controls.heading.errors.whitespace">Heading
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control">
+        <span class="key">Description</span>
+        <!-- <span class="value">
+          <input type="text" name="description" id="description" formControlName="description">
+        </span> -->
+        <span class="value">
+          <textarea _ngcontent-wmm-c14="" class="form-control" name="description" id="description"
+            formControlName="description" placeholder="Enter Description!" rows="3"></textarea>
+        </span>
+        <span class="error-message"
+          *ngIf="addEditSelfForm.controls.description.invalid && (addEditSelfForm.controls.description.dirty || addEditSelfForm.controls.description.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditSelfForm.controls.description.errors.required || addEditSelfForm.controls.description.errors.whitespace">Description
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control">
+        <span class="key">Company</span>
+        <span class="value">
+          <input type="text" name="sub_heading" id="sub_heading" formControlName="sub_heading">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditSelfForm.controls.sub_heading.invalid && (addEditSelfForm.controls.sub_heading.dirty || addEditSelfForm.controls.sub_heading.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditSelfForm.controls.sub_heading.errors.required || addEditSelfForm.controls.sub_heading.errors.whitespace">Company
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control">
+        <span class="key">Current Level</span>
+        <span class="value">
+          <input type="text" name="sub_description" id="sub_description" formControlName="sub_description">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditSelfForm.controls.sub_description.invalid && (addEditSelfForm.controls.sub_description.dirty || addEditSelfForm.controls.sub_description.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditSelfForm.controls.sub_description.errors.required || addEditSelfForm.controls.sub_description.errors.whitespace">Level
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control">
+        <span class="key">Education</span>
+        <span class="value">
+          <input type="text" name="description2" id="description2" formControlName="description2">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditSelfForm.controls.description2.invalid && (addEditSelfForm.controls.description2.dirty || addEditSelfForm.controls.description2.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditSelfForm.controls.description2.errors.required || addEditSelfForm.controls.description2.errors.whitespace">Education
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control">
+        <span class="key">Experience</span>
+        <span class="value">
+          <input type="text" name="description3" id="description3" formControlName="description3">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditSelfForm.controls.description3.invalid && (addEditSelfForm.controls.description3.dirty || addEditSelfForm.controls.description3.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditSelfForm.controls.description3.errors.required || addEditSelfForm.controls.description3.errors.whitespace">Experience
+            is required.</span>
+        </span>
+      </div>
+
+      <div class="custom-form-control">
+        <span class="key">Focus Area</span>
+        <span class="value">
+          <input type="text" name="description4" id="description4" formControlName="description4">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditSelfForm.controls.description4.invalid && (addEditSelfForm.controls.description4.dirty || addEditSelfForm.controls.description4.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditSelfForm.controls.description4.errors.required || addEditSelfForm.controls.description4.errors.whitespace">Description
+            is required.</span>
+        </span>
+      </div>
+
+
+      <div class="custom-form-control decision-box">
+        <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel"
+          (click)="closeAddEditSelf()"><i class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+        <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+            class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+
+
+<!-- //Free PAge  -->
+<p-dialog [draggable]="false" [header]="itemToEdit? 'Edit Free Package Page':'Add New Self'" modal="true"
+  [(visible)]="displayAddEditFree" [responsive]="true" [style]="{minWidth: '800px'}" appendTo="body" maximizable="true"
+  blockScroll="true" [closeOnEscape]="false" (onHide)="closeAddEditFree()">
+  <div class="dialog-content">
+
+    <form class="custom-form" [formGroup]="addEditFreeForm" (ngSubmit)="addUpdateCommonPages()">
+      <div class="custom-form-control">
+        <span class="key">Heading</span>
+        <span class="value">
+          <input type="text" name="heading" id="heading" formControlName="heading">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditFreeForm.controls.heading.invalid && (addEditFreeForm.controls.heading.dirty || addEditFreeForm.controls.heading.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditFreeForm.controls.heading.errors.required || addEditFreeForm.controls.heading.errors.whitespace">Heading
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control">
+        <span class="key">Description</span>
+        <span class="value">
+          <textarea _ngcontent-wmm-c14="" class="form-control" name="description" id="description"
+            formControlName="description" placeholder="Enter Description!" rows="3"></textarea>
+        </span>
+        <span class="error-message"
+          *ngIf="addEditFreeForm.controls.description.invalid && (addEditFreeForm.controls.description.dirty || addEditFreeForm.controls.description.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditFreeForm.controls.description.errors.required || addEditFreeForm.controls.description.errors.whitespace">Description
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control">
+        <span class="key">Confirm Button</span>
+        <span class="value">
+          <input type="text" name="description2" id="description2" formControlName="description2">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditFreeForm.controls.description2.invalid && (addEditFreeForm.controls.description2.dirty || addEditFreeForm.controls.description2.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditFreeForm.controls.description2.errors.required || addEditFreeForm.controls.description2.errors.whitespace">Button
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control">
+        <span class="key">Edit Button</span>
+        <span class="value">
+          <input type="text" name="description3" id="description3" formControlName="description3">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditFreeForm.controls.description3.invalid && (addEditFreeForm.controls.description3.dirty || addEditFreeForm.controls.description3.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditFreeForm.controls.description3.errors.required || addEditFreeForm.controls.description3.errors.whitespace">Button
+            is required.</span>
+        </span>
+      </div>
+      <div class="custom-form-control decision-box">
+        <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel"
+          (click)="closeAddEditFree()"><i class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+        <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+            class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+      </div>
+    </form>
+  </div>
+</p-dialog>

@@ -1,0 +1,114 @@
+//.................modal...........
+.create-note-write {
+    width: 100%;
+    height: 58px;
+    margin-top: 10px;
+}
+.create-note-input {
+    width: 100%;
+    border-radius: 5px;
+    height: 100px;
+    padding: 0 10px;
+}
+.select-btn-create {
+    width: 80%;
+}
+.dropdown-toggle::after {	
+    display: none;	
+}	
+// .navbar {	
+//     height: 65px;	
+// }	
+.navbar .navbar-nav {	
+    display: flex;	
+    margin-right: -18px;	
+    align-items: center;	
+}
+.menu-title {
+    margin-bottom: 8px;
+    color: #000000;
+}
+.navbar .navbar-nav .dropdown-menu.dropdown-menu-create {
+    position: absolute;
+    top: 39px !important;	
+    left: -48px !important;
+    min-width: 10px !important;
+    width: 125px !important;
+}
+.navbar .navbar-nav .dropdown-menu.dropdown-menu-create .dropdown-item {
+    padding: 0 6px!important; 
+    font-size: 15px;   
+}
+.note-icon {
+    background-color: #ffffff;
+    font-weight: 600;
+    font-size: 19px;
+}
+.add-another-note {
+    display: flex;
+    width: 100%;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    text-transform: lowercase;
+}
+.decision-box-create {
+    margin: 20px 0px 20px 13px;
+    display: flex;
+    justify-content: center;
+}
+.radio-lable {
+    font-weight: 600;
+    margin-left: 7px;
+}
+.flex-cont {
+    display: flex;
+    // align-items: center;
+}
+.modal-size {
+    min-width: 550px;
+}
+.width-52 {
+    width: 52%;
+    margin-right: 15px;
+    display: flex;
+}
+:host ::ng-deep .p-multiselect {
+    min-width: 15rem;
+}
+.p-multiselect{
+    width: 200px !important;
+}
+.navbar-expand-lg .navbar-collapse {
+    justify-content: space-between;
+}
+.create-note-write-height {
+    height: 115px;
+}
+body .ui-dialog .ui-dialog-titlebar {
+    text-align: center !important;
+}
+body .ui-dialog-title {
+    font-size: 18px !important;
+}
+p-dialog-titlebar {
+    font-size: 18px !important;
+}
+.create-note-write-share {
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: "Open Sans", "Helvetica Neue", sans-serif;
+}
+@media (max-width: 600px) {    
+    .modal-size {
+        min-width: 300px;
+        top: 200px;
+    } 
+    .radio-lable {
+        font-size: 12px;
+        font-weight: 400;
+        margin-left: 7px;
+    }
+}
+

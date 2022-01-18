@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin | 365 Live</title>
+  <base href="/">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="manifest" href="/manifest.json">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <link href="assets/fonts/feather/style.min.css" rel="stylesheet">
+  <link href="assets/fonts/simple-line-icons/style.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900|Montserrat:300,400,500,600,700,800,900'
+    rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="assets/vendor/pace/themes/black/pace-theme-flash.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZsz-29RYfsMydC3n2Gd_IU4_6X1Ybr7k" async defer></script> -->
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZsz-29RYfsMydC3n2Gd_IU4_6X1Ybr7k&libraries=places" async defer></script>
+  <!-- AIzaSyCZsz-29RYfsMydC3n2Gd_IU4_6X1Ybr7k -->
+  <style type="text/css">
+    .pace .pace-activity {
+      top: 19px;
+      right: 19px;
+      display: none;
+    }
+
+    .page-loading {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      overflow: hidden;
+      background: rgba(51, 51, 51, 1.00);
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      z-index: -1;
+    }
+
+    .loading-icon {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 38px;
+      height: 38px;
+      margin-left: -19px;
+      margin-top: -19px;
+    }
+
+    app-root:empty~.page-loading {
+      opacity: 1;
+      z-index: 1;
+    }
+
+  </style>
+</head>
+
+<body>
+  <app-root></app-root>
+  <div class="page-loading">
+    <img src="assets/img/oval.svg" class="loading-icon" />
+  </div>
+</body>
+
+<script src="https://www.gstatic.com/firebasejs/5.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.5.0/firebase-messaging.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
+<script>
+  firebase.initializeApp({
+    'messagingSenderId': '689198147494'
+  });
+  if (firebase.messaging.isSupported()) {
+    const messaging = firebase.messaging();
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('firebase-messaging-sw.js').then(registration => {
+        messaging.useServiceWorker(registration)
+      }).catch(err => console.log('Service Worker Error', err));
+    } else {
+      console.log('Service Worker Error');
+    }
+    messaging.onMessage(function (payload) {
+console.log("shubha",payload)
+      let redirection = payload.data.urlToRedirect;
+      var notificationData = (payload.data);
+      var notificationOptions = {
+        body: notificationData.body,
+        icon: notificationData.icon,
+        click_action: redirection,
+        data: {
+          click_action: redirection
+        } //seems necessary for firefox foreground clicks
+      };
+      try {
+        var notification = new Notification(notificationData.title, notificationOptions);
+        notification.onclick = function (event) {
+          event.preventDefault(); //prevent the browser from focusing the Notification's tab
+          window.open(redirection, '_self');
+          notification.close();
+        }
+      } catch (err) {
+        try { //Need this part as on Android we can only display notifications thru the serviceworker
+          navigator.serviceWorker.ready.then(function (registration) {
+            registration.showNotification(notificationData.title, notificationOptions);
+          });
+        } catch (err1) {
+          console.log(err1.message);
+        }
+      }
+    });
+  }
+
+</script>
+
+</html>

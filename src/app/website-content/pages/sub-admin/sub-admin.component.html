@@ -1,0 +1,105 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+  <div class="section-heading section-head-with-button">
+    <div class="section-title">
+      <p>Sub-Admin</p>
+    </div>
+  </div>
+  <div *ngIf="SubAdminListing" class="tabular-data-wrapper">
+    <p-table #dt [columns]="cols" [value]="SubAdminListing" [responsive]="true" styleClass="faq-table"
+      [alwaysShowPaginator]="false">
+      <!-- <ng-template pTemplate="caption">
+        <div style="text-align: right">
+        
+          <input readonly type="text" pInputText size="50" placeholder=" Venue Search..."
+            (input readonly)="dt.filterGlobal($event.target.value, 'contains')" class="form-control mb-2" style="width: auto;">
+        </div>
+      </ng-template> -->
+      <ng-template pTemplate="caption">
+        <div>
+          <div class="row">
+            <div class="col-sm-10">
+              <div class="row">
+                <div class="col-sm-6 pl-0">
+                  <input type="text" pInputText size="40" placeholder="Search..." (input)="searchSubAdminList($event)"
+                    class="form-control mb-2" style="width: 100%;">
+                </div>
+                <div class="col-sm-5 text-left">
+                  <p-dropdown [options]="sortByArray" [(ngModel)]="selectedSortBy" optionLabel="name"
+                    (onChange)="selectSortValue($event)" placeholder='Sort By'></p-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="row">
+
+                <div class="col-sm-12  text-right pr-0">
+                  <button type="button" pButton label="Create Admin" style="background-color: #8e71b5;"
+                     routerLink='/create-sub-admin'>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 8%;">Sr.No.</th>
+          <th>Name</th>
+          <th>Email ID</th>
+          <th>Phone Number</th>
+          <th>Status</th>
+          <th>Action</th>
+          <th style="width: 10%;">View</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-columns="columns" let-itemb let-i="rowIndex">
+        <tr [pSelectableRow]="rowData">
+          <td>{{ i + 1 }}</td>
+
+          <td><span class="ui-column-title">Name</span>{{item?.first_name | titlecase}} {{item?.last_name | titlecase}}
+          </td>
+          <td><span class="ui-column-title">EmailId</span>{{item?.email_id ? item?.email_id : 'N/A'}}</td>
+          <td><span class="ui-column-title">PhoneNumber</span>{{item?.mobile_number ? item?.mobile_number : 'N/A'}}</td>
+          <td><span class="ui-column-title">Status</span>
+            <!-- <p-dropdown [options]="statusArray" value="{{item.user_status}}" optionLabel="name" optionValue="value"
+                (onChange)="selectStatusValue($event, item)" placeholder='Status'></p-dropdown> -->
+            <div class="dropdown col-md-12">
+              <button class="btn dropdown dropdown-toggle wid-100 drop-button" type="button" data-toggle="dropdown"
+                [ngClass]="{'active-color': item.user_status == 'active', 'flagged-color': item.user_status == 'flagged', 'inactive-color': item.user_status == 'inactive'}">
+                {{item.user_status | titlecase}}
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu menu-width">
+                <li style="display: flex;" *ngFor="let status of statusArray"
+                  (click)="changeStatus(status, item.id, i)">
+                  <a class="dropdown-item" [ngClass]="{'active': item.user_status == status.value}"
+                    href="javaScript:void(0)">
+                    {{status.name}}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </td>
+
+          <td><span class="ui-column-title">Action</span> <i style="cursor: pointer;"
+              [routerLink]="['/edit-sub-admin', item.id ]" class="fa fa-pencil clr-blue" aria-hidden="true"></i></td>
+          <td class="action-buttons">
+            <span class="ui-column-title">Action</span>
+            <button [routerLink]="['/sub-admin-details', item.id]"
+              class="custom-btn custom-btn-small blue-btn text-center edit" style="margin-right: 4px !important;
+              min-width: 3em !important;
+              height: 2.4em !important;color:#ce0017"><i class="fa fa-eye" aria-hidden="true"></i></button>
+
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td class="text-center text-danger" colspan="7">No Record Found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <p-paginator [rows]="10" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"></p-paginator>
+  </div>
+</div>

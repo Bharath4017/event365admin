@@ -1,0 +1,194 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+  <div class="section-heading section-head-with-button">
+  </div>
+  <div class="section-title">
+    <p style="font-size: 22px; margin-bottom: 1em;">Customer Payment and Booking List</p>
+  </div>
+  <div *ngIf="EventListing" class="tabular-data-wrapper">
+    <p-table #dt [columns]="cols" [value]="EventListing" [responsive]="true" styleClass="faq-table faq-table-cat"
+    [alwaysShowPaginator]="false">
+
+      <ng-template pTemplate="caption">
+        <div class="row">
+          <div class="col-md-7 col-xl-5 mb-2  text-left" style="text-align: right">
+            <input type="text" pInputText size="50" placeholder=" Search..."
+            (input)="searchList($event)" class="form-control mb-2" style="width: auto;">
+          </div>
+          <div class="col-md-4 mb-2 pl-0 text-left">
+            <!-- <select class="form-control" (change)="filterByStatus($event.target.value)">
+              <option value="">All</option>
+              <option value="pending">Pending</option>
+              <option value="completed">Completed</option>
+            </select> -->
+          </div>
+        </div>
+        <!-- <form [formGroup]="searchByDateForm" class="event-list-form" (submit)="searchByDate()">
+              <div class="row">
+                <div class="col-md-3 mb-2 text-left pl-0">
+                  <p-calendar dateFormat="dd-mm-yy" placeholder="From Date" formControlName="toDate"
+                    (onSelect)="onToDateChange($event)" [style]="{'width':'324px'}"></p-calendar>
+                </div>
+                <div class="col-md-3 mb-2 text-left pl-0">
+                  <p-calendar dateFormat="dd-mm-yy" placeholder="To Date" formControlName="fromDate"
+                    [minDate]="minFromDate" dateFormat="dd-mm-yy" [style]="{'width':'324px'}"></p-calendar>
+                </div>
+                <div class="col-md-3 mb-2 pl-0 text-left">
+                  <button class="btn btn-primary btn-raised">Search</button>
+                  &nbsp;&nbsp;
+                  <button class="btn btn-danger btn-raised" type="button" (click)="resetSearchForm()">Reset</button>
+                </div>
+              </div>
+            </form> -->
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 8%;">Sr.No.</th>
+          <th>Customer</th>
+          <th>Event Name</th>
+          <th>Ticket Type</th>
+          <th>Ticket Name</th>
+          <th>Ticket Price</th>
+          <th>Event Type</th>
+          <!-- <th>Event Start</th>
+          <th>Event End</th> -->
+          <th>Organiser</th>
+
+          <th style="width: 10%;">View Details</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-key let-i="rowIndex">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td><span class="ui-column-title">customer</span>{{item?.users?.name}}</td>
+          <td><span class="ui-column-title">Eventname</span>{{item?.events?.name}}</td>
+          <td><span class="ui-column-title">ticketType</span>{{item?.ticket_info[0]?.ticketType}}</td>
+          <td><span class="ui-column-title">ticketName</span>{{item?.ticket_info[0]?.ticketName}}</td>
+          <td><span class="ui-column-title">pricePerTicket</span>{{item.ticket_info[0]?.pricePerTicket}}</td>
+          <td><span class="ui-column-title">EventType</span>{{item.events?.paidType}}</td>
+          <!-- <td><span class="ui-column-title">Start</span>{{item.events.start | date: 'MMMM d, y'}}</td>
+          <td><span class="ui-column-title">End</span>{{item.events.end | date: 'MMMM d, y'}}</td> -->
+          <td><span class="ui-column-title">HostName</span>{{item.events?.users?.name}}</td>
+
+          <td class="action-buttons">
+            <span class="ui-column-title">View</span>
+            <button (click)="openAddEditCompany(item)" class="custom-btn custom-btn-small blue-btn text-center edit"
+              style="margin-right: 4px !important; min-width: 4em !important;
+                height: 2.4em !important;color:#ce0017;
+            "><i class="fa fa-eye" aria-hidden="true"></i></button>
+
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td class="text-center text-danger" colspan="9">No Record Found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <p-paginator [rows]="10" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"></p-paginator>
+
+  </div>
+
+</div>
+
+<p-dialog style="min-width: 706px !important;" [draggable]="false"
+  [header]="itemToEdit? 'User Payment Details':'Add New Location'" modal="true" [(visible)]="displayAddEditAbout"
+  [responsive]="true" [style]="{minWidth: '800px'}" appendTo="body" maximizable="true" blockScroll="true"
+  [closeOnEscape]="false" (onHide)="closeAddEditCompany()">
+  <div *ngIf="itemToEdit" class="dialog-content">
+    <div *ngIf="EventListing" class="tabular-data-wrapper">
+      <div class="row" style="font-size: 15px;padding: 5px;">
+        <div class="custom-form-control col-sm-5">
+          <b style="color: #000;font-size: initial;">Customer Name: </b> {{itemToEdit?.users?.name}}
+        </div>
+        <div class="custom-form-control col-sm-5">
+          <b style="color: #000;font-size: initial;">Event Name: </b> {{itemToEdit?.events?.name}}
+        </div>
+      </div>
+      <div class="row" style="font-size: 15px;padding: 5px;">
+        <div class="custom-form-control col-sm-5">
+          <b style="color: #000;font-size: initial;">Event Start: </b> {{itemToEdit?.events?.start | date: 'MMMM d, y'}}
+        </div>
+        <div class="custom-form-control col-sm-5">
+          <b style="color: #000;font-size: initial;">Event End : </b> {{itemToEdit?.events?.end | date: 'MMMM d, y'}}
+        </div>
+      </div>
+      <div class="row" style="font-size: 15px;padding: 5px;">
+        <div class="custom-form-control col-sm-5">
+          <b style="color: #000;font-size: initial;">Event Type: </b>
+          {{itemToEdit?.events?.paidType}}
+        </div>
+        <div class="custom-form-control col-sm-5">
+          <b style="color: #000;font-size: initial;">TicketName : </b>
+          {{itemToEdit?.ticket_info[0]?.ticketName}}
+        </div>
+      </div>
+      <div class="row" style="font-size: 15px;padding: 5px;">
+        <div class="custom-form-control col-sm-5">
+          <b style="color: #000;font-size: initial;">Ticket Name: </b> {{itemToEdit?.ticket_info[0]?.ticketType}}
+        </div>
+        <div class="custom-form-control col-sm-5">
+          <b style="color: #000;font-size: initial;">Ticket Price : </b>
+          {{itemToEdit?.ticket_info[0]?.pricePerTicket}}
+        </div>
+      </div>
+      <div class="row" style="font-size: 15px;padding: 5px;">
+        <div class="custom-form-control col-sm-5">
+          <b style="color: #000;font-size: initial;">Total Quantity : </b>
+          {{itemToEdit?.ticket_info[0]?.totalQuantity}}
+        </div>
+        <div class="custom-form-control col-sm-5">
+          <b style="color: #000;font-size: initial;">Actual Quantity : </b>
+          {{itemToEdit?.actualQuantity}}
+        </div>
+      </div>
+      <div class="row" style="font-size: 15px;padding: 5px;">
+        <div class="custom-form-control col-sm-5">
+          <b style="color: #000;font-size: initial;">Discounted Price : </b>
+          {{itemToEdit?.ticket_info[0]?.discountedPrice}}
+        </div>
+        <div class="custom-form-control col-sm-5">
+          <b style="color: #000;font-size: initial;">Discounted Percentage: </b>
+          {{itemToEdit?.ticket_info[0]?.disPercentage}}
+        </div>
+      </div>
+      <div class="row" style="font-size: 15px;padding: 5px;">
+        <div class="custom-form-control col-sm-5">
+          <b style="color: #000;font-size: initial;">Description : </b> {{itemToEdit?.ticket_info[0]?.description}}
+        </div>
+        <div class="custom-form-control col-sm-5">
+          <b style="color: #000;font-size: initial;">Organiser Name : </b> {{itemToEdit?.events?.users?.name}}
+        </div>
+      </div>
+      <div class="row" style="padding-left: 79%;padding-top: 4%;">
+        <!-- <button type="reset" title="Cancel" style="
+  background-color: #183857 !important;
+"class="custom-btn red-btn text-center button-with-icon cancel"
+  (click)="closeAddEditCompany()"><i class="fa fa-times icon" aria-hidden="true"></i>Cancel</button> -->
+      </div>
+    </div>
+
+    <!-- <form class="custom-form" [formGroup]="addEditCompanyForm" (ngSubmit)="addUpdateLocation()">
+      <div class="custom-form-control">
+        <span class="key">Location</span>
+        <span class="value">
+          <input type="text" name="location" id="location" formControlName="location">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditCompanyForm.controls.location.invalid && (addEditCompanyForm.controls.location.dirty || addEditCompanyForm.controls.location.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditCompanyForm.controls.location.errors.required || addEditCompanyForm.controls.location.errors.whitespace">Location
+            is required.</span>
+        </span>
+      </div>
+
+      <div class="custom-form-control decision-box">
+        <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel"
+          (click)="closeAddEditCompany()"><i class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+        <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+            class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+      </div>
+    </form> -->
+  </div>
+</p-dialog>

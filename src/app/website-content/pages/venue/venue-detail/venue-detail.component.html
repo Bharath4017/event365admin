@@ -1,0 +1,101 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+  <div class="section-heading section-head-with-button">
+    <div class="section-title flex">
+      <p>{{venueDetails?.venueName | titlecase}}</p>
+      <span class="venue-status" *ngIf="venueDetails?.is_active">(Active Venue)</span>
+      <button title="Edit" class="btn btn-primary btn-raised btn-raised-blue  mr-4 ml-4"
+        [routerLink]="['/edit-venue', venueDetailId]">
+        <i class="ft-edit-2 mr-2"></i> Edit</button>
+      <!-- <i style="cursor: pointer;" [routerLink]="['/edit-venue', venueDetailId]" class="fa fa-pencil clr-blue ml-2" aria-hidden="true"></i> -->
+    </div>
+
+    <div>
+      <button class="btn btn-primary btn-raised" (click)="goBack()">
+        <!-- <img src="../../../../assets/img/svg/left-arrow.svg" style="width: 15px; margin-right: 10px;"/>
+        Back -->
+        <i class="fa fa-long-arrow-left" aria-hidden="true">
+          <span class="ml-1">Back</span></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="veneu-primary-details">
+    <div class="row">
+      <div class="col-md-7 flex">
+        <div class="venue-img">
+          <img [src]="venueDetails?.venueImages[0]?.venueImages" />
+        </div>
+        <div class="primary-venue-details">
+          <div>
+            <h3 class="venue-details-heading">Venue Type</h3>
+            <p class="venue-details">{{venueDetails?.venueType | titlecase}}</p>
+          </div>
+
+          <div>
+            <h3 class="venue-details-heading">Total Venue Capacity</h3>
+            <p class="venue-details">{{venueDetails?.venueCapacity ? venueDetails?.venueCapacity : 0}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="venue-details-sec">
+          <div>
+            <h3 class="venue-details-heading">Address</h3>
+            <p class="venue-details">{{venueDetails?.venueAddress ? venueDetails?.venueAddress : 'N/A'}}</p>
+          </div>
+
+          <div>
+            <h3 class="venue-details-heading">Website</h3>
+            <p class="venue-details">{{venueDetails?.websiteURL ? venueDetails?.websiteURL : 'N/A'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="flex">
+      <div class="primary-venue-details in-row">
+        <h3 class="venue-details-heading">Venue created by:</h3>
+        <p class="venue-details ml-1">{{venueDetails?.adminVenue?.first_name | titlecase}}
+          {{venueDetails?.adminVenue?.last_name | titlecase}} ({{venueDetails?.adminVenue?.user_type}})</p>
+      </div>
+
+      <div class="primary-venue-details in-row">
+        <h3 class="venue-details-heading">Email ID Used for creation:</h3>
+        <p class="venue-details ml-1">{{venueDetails?.adminVenue?.email_id ? venueDetails?.adminVenue?.email_id :
+          'N/A'}}</p>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="venue-details-heading">Description:</h3>
+      <p class="venue-details">{{venueDetails?.shortDescription ? venueDetails?.shortDescription : 'N/A'}}</p>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">
+        <h3 class="venue-details-heading">Hours of Operation</h3>
+        <p *ngFor="let days of venueDetails?.daysAvailable" class="venue-details mb-0">{{days.weekDayName | weekname}}
+          from {{days?.fromTime | weektime}} To {{days?.toTime | weektime}} </p>
+
+      </div>
+      <div class="col-sm-4">
+        <h3 class="venue-details-heading">Sub-Venues</h3>
+        <p class="venue-details mb-0" *ngFor="let subVenue of venueDetails?.subVenues">{{subVenue.subVenueName |
+          titlecase}} ({{subVenue.subVenueCapacity}} capacity) </p>
+      </div>
+      <div class="col-sm-4">
+        <div>
+          <h3 class="venue-details-heading">Ticket/Capacity %</h3>
+          <p class="venue-details">{{venueDetails?.ticketCapacityPercent ? venueDetails?.ticketCapacityPercent : 0}}%
+          </p>
+        </div>
+
+        <div>
+          <h3 class="venue-details-heading">Alloted Tickets</h3>
+          <p class="venue-details mb-0">{{venueDetails?.allotedTicket ? venueDetails?.allotedTicket : 0}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

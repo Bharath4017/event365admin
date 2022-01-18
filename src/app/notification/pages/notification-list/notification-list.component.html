@@ -1,0 +1,29 @@
+<div class="wrapper" *ngIf="totalNotifications > 0">
+  <div>
+    <!-- notification card starts -->
+    <div class="card notification-card" [ngClass]="(!notification.isRead ? 'border' : '')"
+      *ngFor="let notification of notifications">
+      <div class="display-flex notification-card-wrapper" (click)="readNotification(notification)">
+        <div class="notify-bell-icon">
+          <span>
+            <i class="icon-bell icon-bell-blue"></i>
+          </span>
+        </div>
+        <div class="notification-text">
+          <h3>
+            {{notification.title}}
+          </h3>
+          <p>
+            {{notification.body}}
+          </p>
+          <span>
+            {{notification.time | date}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- notification card ends -->
+  </div>
+
+
+</div>

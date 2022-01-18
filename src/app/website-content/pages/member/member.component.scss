@@ -1,0 +1,60 @@
+tr {
+  td + td {
+    text-align: center;
+  }
+}
+.action-buttons {
+  text-align: center;
+
+  .custom-btn {
+    min-width: 2.5em;
+  }
+
+  .edit {
+    margin-right: 0.5em;
+  }
+}
+.dropdown-menu > li:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown-item.active {
+  background-color: #1cbcd8 !important;
+}
+.dropdown-item:focus,
+.dropdown-item:active {
+  background-color: #1cbcd8 !important;
+}
+
+.dropdown-menu.show {
+  position: absolute;
+  top: 0px;
+  left: -28px;
+  will-change: transform;
+}
+
+.clr-blue {
+  color: blue;
+}
+
+.wid-100 {
+  width: 100%;
+  border: 1px solid #007ad9;
+}
+
+.menu-width {
+  width: 75%;
+  min-width: 75%;
+}
+.active-color {
+  color: green;
+  border: 1px solid green;
+}
+.inactive-color {
+  color: red;
+  border: 1px solid red;
+}
+.flagged-color {
+  color: #ed8a19;
+  border: 1px solid #ed8a19;
+}

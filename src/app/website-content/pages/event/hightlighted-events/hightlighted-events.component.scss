@@ -1,0 +1,116 @@
+tr {
+  td + td {
+    text-align: center;
+  }
+}
+.drop-button {
+  width: 95%;
+  height: 38px;
+  background: none;
+  border: 1px solid #f9f9f9;
+  border: 1px solid #ced4da;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dropdown-menu .dropdown-toggle:after {
+  border-top: 0.3em solid transparent;
+  border-right: 0;
+  border-bottom: 0.3em solid transparent;
+  border-left: 0.3em solid;
+}
+.dropdown-menu {
+  width: 87%;
+  // max-width: 87%;
+  margin-left: 0;
+  margin-right: 0;
+  // max-height: 300px;
+  // overflow-y: auto;
+}
+
+.wid-80 {
+  width: 80px;
+  border: 1px solid #007ad9;
+}
+
+li {
+  list-style: none;
+}
+.dropdown-menu li {
+  position: relative;
+  list-style: none;
+}
+.dropdown-item {
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 1px 0;
+  padding: 0 10px;
+}
+.space {
+  margin-right: 8px;
+}
+.dropdown-toggle::after {
+  position: absolute;
+  right: 8px;
+}
+.dropdown-item.active {
+  background-color: #1cbcd8 !important;
+}
+.dropdown-item:focus,
+.dropdown-item:active {
+  background-color: #1cbcd8 !important;
+}
+.submenu {
+  width: 100%;
+  display: none;
+  position: absolute;
+  right: -100% !important;
+  top: -7px;
+  left: auto;
+  max-height: 200px;
+  overflow-y: auto;
+}
+// .nav-item .submenu-left{
+//     right:100%;
+//     left:auto;
+// }
+.btn:focus {
+  box-shadow: 0 0 0 0.2rem #fddec9;
+}
+.dropdown-menu > li:hover {
+  background-color: #f1f1f1;
+}
+.dropdown-menu > li:hover > .submenu {
+  display: block;
+}
+.start-icon {
+  width: 20px;
+  margin-right: 4px;
+}
+.section-head-with-button-custom {
+  align-items: center;
+  justify-content: flex-start;
+}
+.section-head-with-mar {
+  margin-left: 25px;
+}
+.d-flex {
+  justify-content: center;
+}
+
+//................scrollbar...........
+.dropdown-menu::-webkit-scrollbar,
+.submenu::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+.dropdown-menu::-webkit-scrollbar-track,
+.submenu::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.dropdown-menu::-webkit-scrollbar-thumb,
+.submenu::-webkit-scrollbar-thumb {
+  background: #1cbcd8;
+}

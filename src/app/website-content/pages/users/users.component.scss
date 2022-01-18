@@ -1,0 +1,205 @@
+tr {
+  td + td {
+    text-align: center;
+  }
+}
+.action-buttons {
+  text-align: center;
+
+  .edit {
+    margin-right: 1em;
+  }
+}
+body .ui-dropdown {
+  width: 100%;
+  border: 1px solid #ced4da;
+}
+
+body .ui-dropdown:focus,
+body .ui-dropdown:active {
+  box-shadow: 0 0 0 0.2rem #fddec9;
+}
+.custom-btn-small {
+  min-width: 5em;
+  height: 2.1em;
+  font-size: 1em;
+}
+.registered-user-table {
+  .ui-button {
+    background: #8e71b5;
+    border-color: #8e71b5;
+    &:hover {
+      background-color: #285d91 !important;
+      border-color: #285d91 !important;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    }
+  }
+  tr.ui-state-highlight {
+    background-color: #6d44ac !important;
+    td {
+    }
+  }
+  .ui-table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+    display: block;
+  }
+
+  th {
+    width: 175px !important;
+    &:first-child,
+    &:nth-child(7),
+    &:nth-child(10),
+    &:nth-child(11) {
+      width: 200px !important;
+    }
+  }
+  .ui-table.ui-widget.ui-table-responsive {
+    td {
+      display: table-cell !important;
+    }
+  }
+}
+
+.dropdown-menu.show {
+  position: absolute;
+  top: 0px;
+  left: -28px;
+  will-change: transform;
+}
+
+.drop-button {
+  width: 95%;
+  height: 38px;
+  background: none;
+  border: 1px solid #f9f9f9;
+  border: 1px solid #ced4da;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dropdown-menu .dropdown-toggle:after {
+  border-top: 0.3em solid transparent;
+  border-right: 0;
+  border-bottom: 0.3em solid transparent;
+  border-left: 0.3em solid;
+}
+.dropdown-menu {
+  width: 87%;
+  // max-width: 87%;
+  margin-left: 0;
+  margin-right: 0;
+  // max-height: 300px;
+  // overflow-y: auto;
+}
+li {
+  list-style: none;
+}
+.dropdown-menu li {
+  position: relative;
+  list-style: none;
+}
+.dropdown-item {
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 1px 0;
+  padding: 0 10px;
+}
+.dropdown-toggle::after {
+  position: absolute;
+  right: 8px;
+}
+.dropdown-item.active {
+  background-color: #1cbcd8 !important;
+}
+.dropdown-item:focus,
+.dropdown-item:active {
+  background-color: #1cbcd8 !important;
+}
+.submenu {
+  width: 100%;
+  display: none;
+  position: absolute;
+  right: -100% !important;
+  top: -7px;
+  left: auto;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.btn:focus {
+  box-shadow: 0 0 0 0.2rem #fddec9;
+}
+.dropdown-menu > li:hover {
+  background-color: #f1f1f1;
+}
+.dropdown-menu > li:hover > .submenu {
+  display: block;
+}
+
+//................scrollbar...........
+.dropdown-menu::-webkit-scrollbar,
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+.dropdown-menu::-webkit-scrollbar-track,
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.dropdown-menu::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb {
+  background: #1cbcd8;
+}
+
+.clr-blue {
+  color: blue;
+}
+
+.wid-100 {
+  width: 100%;
+  border: 1px solid #007ad9;
+}
+.width-100 {
+  width: 100% !important;
+}
+.width-120 {
+  width: 120% !important;
+}
+.tag-input-form {
+  width: 100%;
+}
+.ng2-tag-input {
+  border: 1px solid #bfbfbf;
+  border-bottom: 1px solid #bfbfbf;
+  border-radius: 5px;
+  padding: 0 !important;
+}
+.ng2-tag-input.ng2-tag-input--focused {
+  border: 1px solid #bfbfbf !important;
+  border-bottom: 1px solid #bfbfbf !important;
+}
+
+.menu-width {
+  width: 80%;
+  min-width: 80%;
+}
+body .ui-button {
+  border: none;
+}
+.active-color {
+  color: green;
+  border: 1px solid green;
+}
+.inactive-color {
+  color: red;
+  border: 1px solid red;
+}
+.flagged-color {
+  color: #ed8a19;
+  border: 1px solid #ed8a19;
+}
+.ng2-tag-input__text-input {	
+  border-radius: 8px;	
+}

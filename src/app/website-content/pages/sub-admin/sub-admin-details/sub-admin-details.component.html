@@ -1,0 +1,148 @@
+<div *ngIf="subAdminDetails" class="content section-padding bg-white box-shadow section-bottom-spacing">
+  <div class="section-heading section-head-with-button">
+    <div class="section-title">
+      <p class="mr-2">Sub-Admin</p>
+      <i style="cursor: pointer;" class="fa fa-pencil clr-blue" [routerLink]="['/edit-sub-admin', subadminDetailId]"
+        aria-hidden="true"></i>
+    </div>
+    <div>
+      <button class="btn btn-primary btn-raised" (click)="goBack()">
+        <!-- <img src="../../../../assets/img/svg/left-arrow.svg" style="width: 15px; margin-right: 10px;"/>
+        Back -->
+        <i class="fa fa-long-arrow-left" aria-hidden="true">
+          <span class="ml-1">Back</span></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="cr-venue-wrapper">
+    <div class="row row-mar">
+      <div class="col-sm-4">
+        <div class="event-row">
+          <p class="field-name">Name</p>
+          <p class="mb-2">{{subAdminDetails?.first_name | titlecase}} {{subAdminDetails?.last_name | titlecase}}</p>
+        </div>
+        <div class="event-row">
+          <p class="field-name">Email</p>
+          <p class="mb-2">{{subAdminDetails?.email_id}}</p>
+        </div>
+        <div class="event-row">
+          <p class="field-name">Phone Number</p>
+          <p class="mb-2">{{subAdminDetails?.mobile_number}}</p>
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+  <div class="sub-venue-main">
+    <div>
+
+      <span class="sub-heading">Permission</span>
+
+    </div>
+
+    <div class="row row-mar ">
+      <div class="flex-wrap">
+        <div class="col-sm-3 mb-2">
+          <div>
+            <p-checkbox name="groupname" value="Dashboard" disabled [(ngModel)]="subAdminPermissionArray" class="space">
+            </p-checkbox>
+            <span>Dashboard</span>
+          </div>
+        </div>
+
+        <div class="col-sm-3 mb-2">
+          <div>
+            <p-checkbox name="groupname" value="Customers" disabled [(ngModel)]="subAdminPermissionArray" class="space">
+            </p-checkbox>
+            <span>Customers</span>
+          </div>
+        </div>
+
+
+        <div class="col-sm-3 mb-2">
+          <div>
+            <p-checkbox name="groupname" value="Organisers" disabled [(ngModel)]="subAdminPermissionArray"
+              class="space"></p-checkbox>
+            <span>Organisers</span>
+          </div>
+        </div>
+
+
+        <div class="col-sm-3 mb-2">
+          <div>
+            <p-checkbox name="groupname" value="Events" disabled [(ngModel)]="subAdminPermissionArray" class="space">
+            </p-checkbox>
+            <span>Events</span>
+          </div>
+        </div>
+
+        <div class="col-sm-3 mb-2">
+          <div>
+            <p-checkbox name="groupname" value="Archived-Events" disabled [(ngModel)]="subAdminPermissionArray"
+              class="space">
+            </p-checkbox>
+            <span>Archived-Events</span>
+          </div>
+        </div>
+
+
+        <div class="col-sm-3 mb-2">
+          <div>
+            <p-checkbox name="groupname" value="Paid Events" disabled [(ngModel)]="subAdminPermissionArray"
+              class="space"></p-checkbox>
+            <span>Paid Events</span>
+          </div>
+        </div>
+
+        <div class="col-sm-3 mb-2">
+          <div>
+            <p-checkbox name="groupname" value="Home Page Design" disabled [(ngModel)]="subAdminPermissionArray"
+              class="space"></p-checkbox>
+            <span>Home Page Design</span>
+          </div>
+        </div>
+
+        <div class="col-sm-3 mb-2">
+          <div>
+            <p-checkbox name="groupname" value="Categories" disabled [(ngModel)]="subAdminPermissionArray"
+              class="space"></p-checkbox>
+            <span>Categories</span>
+          </div>
+        </div>
+        <div class="col-sm-3 mb-2">
+          <div>
+            <p-checkbox name="groupname" value="Venues" disabled [(ngModel)]="subAdminPermissionArray" class="space">
+            </p-checkbox>
+            <span>Venues</span>
+          </div>
+        </div>
+        <div class="col-sm-3 mb-2">
+          <div>
+            <p-checkbox name="groupname" value="Payments" disabled [(ngModel)]="subAdminPermissionArray" class="space">
+            </p-checkbox>
+            <span>Payments</span>
+          </div>
+        </div>
+        <div class="col-sm-3 mb-2">
+          <div>
+            <p-checkbox name="groupname" value="Support" disabled [(ngModel)]="subAdminPermissionArray" class="space">
+            </p-checkbox>
+            <span>Support</span>
+          </div>
+        </div>
+
+        <div class="col-sm-3 mb-2">
+          <div>
+            <p-checkbox name="groupname" value="Event Status" disabled [(ngModel)]="subAdminPermissionArray"
+              class="space"></p-checkbox>
+            <span>Event Status</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

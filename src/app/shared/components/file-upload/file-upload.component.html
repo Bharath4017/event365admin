@@ -1,0 +1,32 @@
+<div class="row file-upload-wrapper no-gutters">
+
+  <!--Upload Form-->
+  <div class="upload-file-form col-lg-6">
+    <input accept='image/*' type="file" (change)="preview($event)" #inputFile />
+    <!-- <div class="progress">
+      <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+        [style.width]="uploadProgressPercent + '%'" [attr.aria-valuenow]="uploadProgressPercent" aria-valuemin="0"
+        aria-valuemax="100"></div>
+    </div> -->
+
+    <div class="upload-action-btns">
+      <!-- <button type="button" [disabled]="((!eventFromFileInput) || (spinnerStatus))" (click)="uploadFile()"
+        class="custom-btn green-btn text-center button-with-icon upload-btn"><i class="fa fa-upload icon"
+          aria-hidden="true"></i>Upload</button> -->
+      <button type="button" (click)="cancelCurrentUpload()" [disabled]="!previewImage"
+        class="custom-btn red-btn text-center button-with-icon">
+        <i class="fa fa-times icon" aria-hidden="true"></i>Reset</button>
+      <div class="loader-spinner">
+        <p-progressSpinner [style]="{width: '50px', height: '50px'}" strokeWidth="8" fill="#EEEEEE"
+          animationDuration=".5s" *ngIf="spinnerStatus"></p-progressSpinner>
+      </div>
+    </div>
+    <p-messages styleClass="uploadFileDialogMessage" key="dialogToast" [(value)]="dialogMessages"></p-messages>
+  </div>
+
+  <!--Image preview before upload-->
+  <div class="image-preview col-lg-6 text-center">
+    <h6>Image Preview</h6>
+    <img [src]="previewImage || 'assets/project-images/defaultUplaodImage.png'" alt="">
+  </div>
+</div>

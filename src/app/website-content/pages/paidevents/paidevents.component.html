@@ -1,0 +1,138 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+  ​
+  <div class="section-heading section-head-with-button">
+    <div class="section-title">
+      <p>Set Minimun Amount (For Posting Paid Event)</p>
+    </div>
+  </div>
+  ​
+  <div *ngIf="EventListing" class="tabular-data-wrapper">
+    <!-- <div class="row">
+          <div class="col-md-4 mb-2">
+            <form [formGroup]="searchUserForm" (submit)="searchUser()">
+              <input class="form-control" type="text" placeholder="Search by Name, Mobile, Email" formControlName="search">
+            </form>
+          </div>
+        </div> -->
+    <p-table #dt [columns]="cols" [value]="EventListing" [responsive]="true" styleClass="faq-table" [paginator]="false"
+      [rows]="10" [alwaysShowPaginator]="false">
+      <ng-template pTemplate="caption">
+        <div class="row">
+          <div class="col-md-2 pl-0 text-left" style="text-align: right">
+            <input type="text" pInputText size="50" placeholder="Event Search..." [(ngModel)]="searchValue"
+              class="form-control mb-2">
+          </div>
+          <div class="col-md-2 text-left">
+            <p-dropdown [options]="sortByArray" [(ngModel)]="selectedSortBy" optionLabel="name"
+              [style]="{width: '100%', minWidth: '100%'}" placeholder='Sort By'></p-dropdown>
+            <!-- <select class="form-control" (change)="filterByStatus($event.target.value)">
+                <option value="">Sort by</option>
+                <option value="1">A-Z (Alphabetically)</option>
+                <option value="2">Z-A (Reverse Alphabetically)</option>
+              </select> -->
+          </div>
+          <div class="dropdown col-md-3 text-left">
+            <button class="btn dropdown dropdown-toggle drop-button" type="button" data-toggle="dropdown">
+              {{categoryTitle}}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu menu-transition">
+              <li style="display: flex;" (click)="selectAllCategories($event)">
+                <a class="dropdown-item" href="javaScript:void(0)" [ngClass]="{'active': allCategoriesSelect}">
+                  <input type="checkbox" [checked]="allCategoriesSelect" class="space" />
+                  All Categories
+                </a>
+              </li>
+              <li style="display: flex;" *ngFor="let category of categorySubCategoryList"
+                (click)="categorySelect($event, category)">
+                <a class="dropdown-item"
+                  [ngClass]="{'dropdown-toggle': category?.subCategory.length > 0, 'active': Object.keys(selectedCategory).includes(category.id.toString()) && selectedCategory[category.id]?.allChecked}"
+                  href="javaScript:void(0)">
+                  <input type="checkbox"
+                    [checked]="Object.keys(selectedCategory).includes(category.id.toString()) && selectedCategory[category.id]?.allChecked"
+                    [indeterminate]="selectedCategory[category.id]?.partialChecked" class="space" />
+                  {{category.categoryName}}
+                </a>
+                <ul class="submenu dropdown-menu" *ngIf="category?.subCategory.length > 0">
+                  <li style="display: flex;" *ngFor="let subcategory of category?.subCategory"
+                    (click)="subCategorySelect($event, subcategory, category)">
+                    <a [ngClass]="{'active': selectedCategory[category.id]?.subcategorySelect.includes(subcategory.id)}"
+                      class="dropdown-item" href="javaScript:void(0)">
+                      <input type="checkbox"
+                        [checked]="selectedCategory[category.id]?.subcategorySelect.includes(subcategory.id)"
+                        class="space" />
+                      {{subcategory.subCategoryName}}</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-3 text-left">
+            <button class="btn btn-primary btn-raised" (click)="searchData()">Search</button>
+            &nbsp;&nbsp;
+            <button class="btn btn-danger btn-raised" type="button" (click)="resetSearchForm()">Reset</button>
+          </div>
+          <div class="col-md-2 text-right pr-0">
+            <button class="btn btn-primary btn-raised" routerLink="/manageRule">Manage Rule</button>
+          </div>
+        </div>
+      </ng-template>
+      ​
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 8%;">Sr.No.</th>
+          <th>Name</th>
+          <th>Organiser</th>
+          <th>Category</th>
+          <th>Sub Category</th>
+          <th>Amount Paid</th>
+          <th>Date of Payment</th>
+          <th style="width: 10%;">View</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-key let-i="rowIndex">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <!-- <td><span *ngFor="let col of columns" [ngSwitch]="col.field" class="ui-column-title">
+                <input [ngSwitch]="col.field" *ngSwitchCase="name" pInputText type="text"
+                  (input)="dt.filter($event.target.value, col.field, 'contains')">
+                Name</span>{{item.name}}</td> -->
+          <td><span class="ui-column-title">Name</span>{{item.name}}</td>
+          <td><span class="ui-column-title">User</span>{{item.users.name}}</td>
+          <td><span class="ui-column-title">Category</span>
+            <ng-container *ngFor="let user of item.eventCategories;let i =index;">
+              {{user.categoryName}}{{ (i===0 && item.eventCategories.length === 1) ||
+              i===item.eventCategories.length - 1 ? '' : ','}}
+            </ng-container>
+          </td>
+          <td><span class="ui-column-title">Sub Category</span>
+            <ng-container *ngFor="let user of item.eventSubCategories;let i =index;">
+              {{user.subCategoryName}}{{ (i===0 && item.eventSubCategories.length === 1) ||
+              i===item.eventSubCategories.length - 1 ? '' : ','}}
+            </ng-container>
+          </td>
+          <td><span class="ui-column-title">MinPaidAmount</span>{{item.MinPaidAmount ? item.MinPaidAmount : 'N/A'}}</td>
+          <td><span class="ui-column-title">Date of Payment</span>{{item.created_at | date: 'MMMM d, y'}}</td>
+          <td class="action-buttons">
+            <span class="ui-column-title">View Details</span>
+            <button routerLink="/paideventdetails/{{item.id}}"
+              class="custom-btn custom-btn-small blue-btn text-center edit"
+              style=" margin-right: 4px !important;min-width: 4em !important;height: 2.4em !important; color:#ce0017">
+              <i class="fa fa-eye" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td class="text-center text-danger" colspan="8">No Record Found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <!-- <p-paginator [rows]="10" [totalRecords]="totalRecords"
+      (onPageChange)="payload.page=($event.page+1);getAllPaidEvent()"></p-paginator> -->
+
+      <p-paginator [rows]="10" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"></p-paginator>
+
+
+  </div>
+</div>

@@ -1,0 +1,59 @@
+<div class="note-wrapper">
+  <div class="note-page-heading">Notes</div>
+
+  <div class="note-rows-wrapper">
+    <ng-container *ngFor="let note of notesList;let i = index">
+      <div class="note-row">
+        <div style="display: flex;justify-content: space-between;">
+          <p class="note-content">{{note?.notes}} </p>
+          <i style="cursor: pointer;" class="fa fa-trash clr-red mr-2 mt-2" aria-hidden="true"
+            (click)="deleteNotes(note)"></i>
+        </div>
+
+        <div class="divider"></div>
+        <div class="note-footer">
+          <ng-container *ngIf="note.isPrivate">
+            <div class="admin-name">
+              Private Note
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!note.isPrivate && note.isownnotes">
+            <div class="admin-name">
+              <i class="pi pi-share-alt share-icon"></i>
+              <!-- James Rane (super Admin) shared with you -->
+              You shared with
+              <ng-container *ngFor="let user of note.notesManyRelation;let i =index;">
+                {{user?.first_name}} {{ user?.last_name}} ({{user?.user_type}}){{ (i===0 &&
+                note?.notesManyRelation.length === 1) ||
+                i===note?.notesManyRelation.length - 1 ? '' : ','}}
+              </ng-container>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!note.isPrivate && !note.isownnotes">
+            <div class="admin-name">
+              <i class="pi pi-share-alt share-icon"></i>
+              <!-- James Rane (super Admin) shared with you -->
+              {{note?.first_name}} {{user?.last_name}} (super Admin)
+              <!-- <ng-container *ngFor="let user of note.notesManyRelation">
+                {{user?.first_name}} {{ user?.last_name}} ({{user?.user_type}})
+              </ng-container> -->
+              shared with you
+            </div>
+          </ng-container>
+          <div class="admin-date-wrapper">
+            <i class="ft-calendar"></i>
+            <span class="admin-date">{{note?.created_at | date : 'dd/MM/yyyy, h:mm a'}}</span>
+          </div>
+        </div>
+      </div>
+
+    </ng-container>
+    <ng-container *ngIf="notesList.length < 1">
+      <div class="note-row">
+        <p class="note-content" style="text-align: center;">No notes available! </p>
+      </div>
+    </ng-container>
+  </div>
+  <p-paginator [rows]="10" [totalRecords]="totalRecords" (onPageChange)="page=($event.page+1); getAllNotes()">
+  </p-paginator>
+</div>

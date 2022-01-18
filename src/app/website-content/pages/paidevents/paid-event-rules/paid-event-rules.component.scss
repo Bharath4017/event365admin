@@ -1,0 +1,51 @@
+//.........new css for fixes............
+
+.box-shadow .tabular-data-wrapper {
+  width: 90%;
+  margin: 0 auto;
+}
+.heading {
+  font-size: 20px;
+  font-weight: 800;
+  display: flex;
+  margin-bottom: 0;
+}
+.edit {
+  width: 20%;
+}
+.border-bottom {
+  border: none;
+  text-align: center;
+  border-bottom: 1px solid #000000;
+}
+.green-text {
+  font-size: 14px;
+  font-style: italic;
+  color: green;
+  margin-bottom: 20px;
+}
+.decision-box-create {
+  display: flex;
+  width: 71%;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.green-btn {
+  margin-right: 20px;
+}
+.sub-head {
+  font-weight: 600;
+}
+.option {
+  display: flex;
+}
+.ma-l {
+  margin-left: 5px;
+}
+.p-field-radiobutton {
+  margin-left: 20px;
+}
+.invalid {
+  border: 1px solid red;
+  border-bottom: 1px solid red !important;
+}

@@ -1,0 +1,71 @@
+.note-wrapper {
+  width: 100%;
+}
+.note-page-heading {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+// .note-rows-wrapper {
+
+// }
+.note-row {
+  min-height: 50px;
+  height: auto;
+  width: 100%;
+  border: 2px solid black;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+.note-content {
+  margin-bottom: 0;
+  font-size: 16px;
+  padding: 10px;
+  width: 90%;
+}
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: #000000;
+  opacity: 0.5;
+}
+.note-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 10px 5px;
+}
+.admin-name {
+  width: 60%;
+  // max-width: 500px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+.admin-date-wrapper {
+  width: 30%;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: right;
+}
+.share-icon
+			{
+  			font-size: 2rem;
+ 			 margin-right: 5px;
+			}
+@media (max-width: 768px) {
+  .admin-name {
+    // max-width: 500px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .admin-date-wrapper {
+    font-size: 16px;
+    font-weight: 500;
+    text-align: right;
+  }
+}
+.clr-red {
+  color: red;
+}

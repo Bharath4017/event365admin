@@ -1,0 +1,48 @@
+<!--Contact Information on the website-->
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+
+  <div class="section-heading section-head-with-button">
+    <div class="section-title">
+      <p>Email Tempate</p>
+      <p class="section-sub-heading">Send Email Tempate being displayed on User Email</p>
+    </div>
+
+    <div class="header-action-button">
+      <button *ngIf="!displayEditForm" (click)="openEditPrivacyPolicy()"
+        class="custom-btn theme-btn text-center block-center button-with-icon"><i class="fa fa-pencil icon"
+          aria-hidden="true"></i>Edit</button>
+
+      <button *ngIf="displayEditForm" (click)="closeEditPrivacyPolicy()"
+        class="custom-btn theme-btn text-center block-center button-with-icon"><i class="fa fa-times icon"
+          aria-hidden="true"></i>Cancel</button>
+    </div>
+  </div>
+
+  <div *ngIf="displayEditForm" class="terms-and-conditions-content animated fadeIn">
+    <form [formGroup]="privacyPolicyForm" (ngSubmit)="updateEmailTemp()" class="custom-form">
+      <!-- <angular-editor id="angularEditor" formControlName="description" [config]="editorConfig" class="te-basic-tools">
+      </angular-editor> -->
+      <quill-editor formControlName="description" [modules]="toolbar"></quill-editor>
+      <span class="error-message"
+        *ngIf="privacyPolicyForm.controls.description.invalid && (privacyPolicyForm.controls.description.dirty || privacyPolicyForm.controls.description.touched) && isprivacyPolicyFormSubmitted">
+        <span
+          *ngIf="privacyPolicyForm.controls.description.errors.required || privacyPolicyForm.controls.description.errors.whitespace">Terms
+          and Conditions are required.</span>
+      </span>
+
+
+      <div class="custom-form-control decision-box">
+        <button type="button" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel"
+          (click)="closeEditPrivacyPolicy()"><i class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+        <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+            class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="!displayEditForm && description?.description" class="section-spacing animated fadeIn">
+    <p class="data-para" [innerHtml]="description?.description |
+      safeHtml">
+  </div>
+
+</div>

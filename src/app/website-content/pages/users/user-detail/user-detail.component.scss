@@ -1,0 +1,266 @@
+tr {
+  td + td {
+    text-align: center;
+  }
+}
+body .ui-dropdown {
+  width: 100%;
+  border: 1px solid #ced4da;
+}
+body .ui-dropdown:focus,
+body .ui-dropdown:active {
+  box-shadow: 0 0 0 0.2rem #fddec9;
+}
+.venue-status {
+  font-style: italic;
+  font-size: 16px;
+  color: green;
+  margin-left: 8px;
+}
+.veneu-primary-details {
+  width: 100%;
+  margin-top: 20px;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+.venue-img {
+  width: 32%;
+  height: 125px;
+  // border: 1px solid #000000;
+}
+.venue-img img {
+  width: 100%;
+  height: 100%;
+}
+.primary-venue-details {
+  width: 65%;
+}
+.content-flex {
+  display: flex;
+  align-items: baseline;
+}
+.venue-details-heading {
+  font-size: 16px;
+  color: #000000;
+  font-weight: 600;
+  text-transform: capitalize;
+  margin-bottom: 5px;
+  margin-right: 10px;
+}
+.heading {
+  font-size: 1.5em;
+  text-align: left;
+}
+
+.venue-details {
+  font-weight: 400;
+}
+.venue-details-sec {
+  width: 90%;
+}
+.in-row {
+  display: flex;
+  margin-top: 10px;
+  align-items: flex-start;
+}
+.clr-blue {
+  color: blue;
+}
+.drop-button {
+  width: 95%;
+  height: 38px;
+  background: none;
+  border: 1px solid #f9f9f9;
+  border: 1px solid #ced4da;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dropdown-menu .dropdown-toggle:after {
+  border-top: 0.3em solid transparent;
+  border-right: 0;
+  border-bottom: 0.3em solid transparent;
+  border-left: 0.3em solid;
+}
+.dropdown-menu {
+  width: 87%;
+  // max-width: 87%;
+  margin-left: 0;
+  margin-right: 0;
+  // max-height: 300px;
+  // overflow-y: auto;
+  min-width: 290px;
+}
+li {
+  list-style: none;
+}
+.dropdown-menu li {
+  position: relative;
+  list-style: none;
+}
+.dropdown-item {
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 1px 0;
+  padding: 0 10px;
+}
+.space {
+  margin-right: 8px;
+}
+.dropdown-toggle::after {
+  position: absolute;
+  right: 8px;
+}
+.dropdown-item.active {
+  background-color: #1cbcd8 !important;
+}
+.dropdown-item:focus,
+.dropdown-item:active {
+  background-color: #1cbcd8 !important;
+}
+.submenu {
+  width: 100%;
+  display: none;
+  position: absolute;
+  right: -100% !important;
+  top: -7px;
+  left: auto;
+  max-height: 200px;
+  overflow-y: auto;
+}
+// .nav-item .submenu-left{
+//     right:100%;
+//     left:auto;
+// }
+.btn:focus {
+  box-shadow: 0 0 0 0.2rem #fddec9;
+}
+.dropdown-menu > li:hover {
+  background-color: #f1f1f1;
+}
+.dropdown-menu > li:hover > .submenu {
+  display: block;
+}
+.start-icon {
+  width: 20px;
+  margin-bottom: 4px;
+}
+.section-head-with-button-custom {
+  align-items: center;
+  justify-content: flex-start;
+}
+.section-head-with-mar {
+  margin-left: 25px;
+}
+.event-details-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.event-columns {
+  width: 33%;
+}
+.event-row {
+  display: flex;
+}
+.field-name {
+  width: 35%;
+  font-size: 15px;
+  font-weight: 600;
+  color: #000;
+  text-transform: capitalize;
+  margin-bottom: 0.5rem;
+}
+.field-details {
+  width: 60%;
+  font-size: 14px;
+  color: #000;
+  text-transform: capitalize;
+  margin-bottom: 0.5rem;
+}
+//.............modal..............
+.test {
+  max-width: 95%;
+  width: 95%;
+}
+body .ui-dialog {
+  max-width: 90% !important;
+  min-width: 90% !important;
+  width: 90% !important;
+}
+body .ui-dialog .ui-dialog-titlebar {
+  max-width: 90% !important;
+  margin: 0 auto !important;
+  border: none !important;
+  border-bottom: none !important;
+}
+
+.modal-heading {
+  font-size: 30px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.content-width {
+  width: 500px;
+  margin: 10px auto;
+  font-weight: 600;
+}
+
+//................scrollbar...........
+.dropdown-menu::-webkit-scrollbar,
+.submenu::-webkit-scrollbar,
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+.dropdown-menu::-webkit-scrollbar-track,
+.submenu::-webkit-scrollbar-track,
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.dropdown-menu::-webkit-scrollbar-thumb,
+.submenu::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb {
+  background: #1cbcd8;
+}
+
+.font-color {
+  color: blue;
+}
+.link {
+  font-size: 12px;
+}
+.start-icon {
+  width: 15px;
+  margin-bottom: 4px;
+  margin-right: 8px;
+}
+
+body .ui-rating a {
+  color: #f2ca4e !important;
+}
+body .ui-rating a .ui-rating-icon {
+  font-size: 40px !important;
+}
+.star-center {
+  display: flex;
+  justify-content: center;
+  margin: 2rem;
+}
+.active-color {
+  color: green;
+  border: none;
+}
+.inactive-color {
+  color: red;
+  border: none;
+}
+.flagged-color {
+  color: #ed8a19;
+  border: none;
+}

@@ -1,0 +1,94 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+
+  <div class="section-heading section-head-with-button">
+    <div class="section-title">
+      <p>Sub Category List</p>
+    </div>
+    <div class="header-action-button">
+      <button (click)="openAddEditCompany()" class="custom-btn theme-btn text-center block-center button-with-icon"><i
+          class="fa fa-plus icon" aria-hidden="true"></i>Add New</button>
+
+    </div>
+  </div>
+  <div *ngIf="CompanyListing" class="tabular-data-wrapper">
+    <p-table #dt [columns]="cols" [value]="CompanyListing" [responsive]="true" styleClass="faq-table" [paginator]="true"
+      [rows]="8" [alwaysShowPaginator]="false">
+      <ng-template pTemplate="caption">
+        <div style="text-align: right">
+          <input type="text" pInputText size="50" placeholder="Sub Category Search..."
+            (input)="dt.filterGlobal($event.target.value, 'contains')" class="form-control mb-2" style="width: auto;">
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>SubCategory</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td><span *ngFor="let col of columns" [ngSwitch]="col.field" class="ui-column-title"><input
+                [ngSwitch]="col.field" *ngSwitchCase="categoryName" pInputText type="text"
+                (input)="dt.filter($event.target.value, col.field, 'contains')">
+              Company</span>{{item.subCategoryName}}</td>
+
+          <td><span class="ui-column-title">Status Change</span>
+            <div class="d-flex align-items-center">
+              <app-active-swtich [checked]="item.isActive" (change)="statusChange($event, item.id)" class="ml-1">
+              </app-active-swtich>
+            </div>
+          </td>
+          <td class="action-buttons">
+            <span class="ui-column-title">Action</span>
+            <button (click)="openAddEditCompany(item)" class="custom-btn custom-btn-small blue-btn text-center edit"
+              style="
+                margin-right: 4px !important;
+                min-width: 4em !important;
+                height: 2.4em !important;
+            "><i class="fa fa-pencil" aria-hidden="true"></i></button>
+            <button class="custom-btn custom-btn-small red-btn text-center" (click)="deleteSubCategory(item)"
+              style=" margin-right: 4px !important;min-width: 4em !important;height: 2.4em !important;"><i
+                class="fa fa-trash-o" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td class="text-center text-danger" colspan="2">No Record Found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+</div>
+
+<p-dialog [draggable]="false" [header]="itemToEdit? 'Edit SubCategory':'Add New SubCategory'" modal="true"
+  [(visible)]="displayAddEditAbout" [responsive]="true" [style]="{minWidth: '800px'}" appendTo="body" maximizable="true"
+  blockScroll="true" [closeOnEscape]="false" (onHide)="closeAddEditCompany()">
+  <div class="dialog-content">
+
+    <form class="custom-form" [formGroup]="addEditCompanyForm" (ngSubmit)="addUpdateSubCategory()">
+      <div class="custom-form-control">
+        <span class="key">SubCategory Name</span>
+        <span class="value">
+          <input type="text" name="subCategoryName" id="subCategoryName" formControlName="subCategoryName">
+        </span>
+        <span class="error-message"
+          *ngIf="addEditCompanyForm.controls.subCategoryName.invalid && (addEditCompanyForm.controls.subCategoryName.dirty || addEditCompanyForm.controls.subCategoryName.touched) && isAddFaqSubmitted">
+          <span
+            *ngIf="addEditCompanyForm.controls.subCategoryName.errors.required || addEditCompanyForm.controls.subCategoryName.errors.whitespace">Sub
+            Category
+            is required.</span>
+        </span>
+      </div>
+
+      <div class="custom-form-control decision-box">
+        <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel"
+          (click)="closeAddEditCompany()"><i class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+        <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+            class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+      </div>
+    </form>
+  </div>
+</p-dialog>

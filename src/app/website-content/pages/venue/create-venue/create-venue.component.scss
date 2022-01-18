@@ -1,0 +1,149 @@
+.cr-venue-wrapper {
+  width: 100%;
+  padding-top: 20px;
+}
+.test {
+  border: 1px solid #000;
+  width: 100%;
+  height: 100%;
+}
+.row.row-mar {
+  margin-left: 0;
+  margin-right: 0;
+}
+.lable-head {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 2px;
+  text-transform: capitalize;
+}
+.ui-chkbox-label {
+  text-transform: inherit !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  color: #000000 !important;
+}
+.input-div {
+  width: 70px;
+  // border: none;
+  // border-bottom: 1px solid #000000;
+  border: 1px solid #000000;
+  background-color: transparent;
+  margin: 0 5px;
+}
+.ui-dropdown {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  vertical-align: middle;
+  min-width: 6em;
+}
+.input-div:focus,
+.input-div:active {
+  background-color: transparent;
+}
+.time-lable {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000000;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.mar-bot {
+  margin-bottom: 8px;
+}
+.start-icon {
+  width: 25px;
+  height: 25px;
+  margin-left: 4px;
+}
+.img-cross-wrapper {
+  position: relative;
+  margin-right: 15px;
+}
+.img-cross {
+  color: red;
+  position: absolute;
+  font-weight: 200;
+  top: -3px;
+  right: 0;
+  font-size: 12px;
+  cursor: pointer;
+}
+.sub-venue-main {
+  width: 100%;
+  margin-top: 2em;
+}
+.sub-heading {
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: capitalize;
+  padding: 14px;
+}
+.space {
+  margin-right: 8px;
+}
+.info-icon {
+  width: 15px;
+  margin-left: 8px;
+}
+.info-effect {
+  position: relative;
+}
+.info-sub-venue {
+  display: none;
+}
+.info-icon:hover .info-sub-venue,
+.info-effect:hover .info-sub-venue {
+  display: block;
+  width: 250px;
+  box-shadow: 0 0 6px #00000030;
+  border-radius: 5px;
+  padding: 8px;
+  font-size: 12px;
+  position: absolute;
+  color: #000000;
+  left: 100%;
+  top: 0;
+}
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+.flex {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}
+.venue-btn {
+  background-color: red;
+  margin-right: 15px;
+  border: none;
+  color: #fff;
+}
+.venue-green {
+  background-color: green;
+  border: none;
+  color: #fff;
+}
+input::placeholder,
+textarea::placeholder {
+  font-size: 14px;
+}
+.display-flex {
+  display: flex;
+  align-items: center;
+}
+@media only screen and (max-width: 1200px) {
+  .editRow {
+    flex-direction: column;
+  }
+  .mar-bot {
+    margin: 5px 0px 20px 0px;
+  }
+  .display-flex {
+    justify-content: space-evenly;
+  }
+}
